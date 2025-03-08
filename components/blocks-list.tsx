@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from "react"
-import Link from "next/link"
-import { Copy, ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from "lucide-react"
 import type { Block } from "@/data/blocks"
+import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight, Copy } from "lucide-react"
+import Link from "next/link"
+import { useState } from "react"
 
 interface BlockCardProps {
   block: Block

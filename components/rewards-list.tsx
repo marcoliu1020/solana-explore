@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
-import { Copy, ChevronRight, ChevronLast } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { ChevronLast, ChevronRight, Copy } from "lucide-react"
+import { useState } from "react"
 
 interface Reward {
   type: "Rent" | "Fee"

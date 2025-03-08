@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from 'react'
-import { Copy, ChevronDown, ChevronRight, ChevronLast, Filter } from 'lucide-react'
+import { Copy, ChevronRight, ChevronLast, Filter } from 'lucide-react'
 
 interface Transaction {
   program: string

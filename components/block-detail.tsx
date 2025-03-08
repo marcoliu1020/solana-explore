@@ -1,11 +1,11 @@
 "use client"
 
-import { Copy, ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react"
+import { RewardsList } from "@/components/rewards-list"
+import { TransactionsList } from "@/components/transactions-list"
+import { mockBlockDetail } from "@/data/block-detail"
+import { CheckCircle2, ChevronLeft, ChevronRight, Copy } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { TransactionsList } from "@/components/transactions-list"
-import { RewardsList } from "@/components/rewards-list"
-import { mockBlockDetail } from "@/data/block-detail"
 
 interface BlockDetailProps {
   blockNumber: string
