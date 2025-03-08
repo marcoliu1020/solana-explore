@@ -3,33 +3,16 @@
 import { Copy, ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { TransactionsList } from "./transactions-list"
-import { RewardsList } from "./rewards-list"
+import { TransactionsList } from "@/components/transactions-list"
+import { RewardsList } from "@/components/rewards-list"
+import { mockBlockDetail } from "@/data/block-detail"
 
 interface BlockDetailProps {
   blockNumber: string
 }
 
 export function BlockDetail({ blockNumber }: BlockDetailProps) {
-  // This would normally come from an API
-  const blockData = {
-    number: "322,250,699",
-    hash: "BgNpEJQ8eVx1s67G2DkqT7CDiuCdCpJmwqTmTGsjd74D",
-    leader: "dv4ACNkpYPcE3aKmYDqZm9G5EB3J4MRoeE7WNDRBVJB",
-    parentBlock: "322250698",
-    parentBlockHash: "8N3HzXuZwHEB8kbMCrobGskFjn6ySAPqqiP4M8cSCa51",
-    epoch: "745",
-    transactions: {
-      count: 12,
-      successRate: "100.00%",
-    },
-    createdOn: "August 29, 2024 12:42:55 UTC",
-    confirmations: "Finalised",
-    rewards: {
-      amount: "0.00003000",
-      usd: "0.0043",
-    },
-  }
+  const blockData = mockBlockDetail
 
   const prevBlockNumber = Number.parseInt(blockNumber) - 1
   const nextBlockNumber = Number.parseInt(blockNumber) + 1
