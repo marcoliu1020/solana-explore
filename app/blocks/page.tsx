@@ -1,6 +1,6 @@
 import BlocksList from "@/components/blocks-list"
-import { blocks } from "@/data/blocks"
+import { mockBlocks } from "@/data/blocks"
 
 export default function BlocksPage() {
-  return <BlocksList blocks={blocks} />
+  return <BlocksList blocks={mockBlocks} />
 } 
