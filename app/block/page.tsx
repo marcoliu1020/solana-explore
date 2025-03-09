@@ -1,12 +1,17 @@
 import { BlockDetail } from "@/components/block-detail"
+import { notFound } from 'next/navigation'
 
-interface PageProps {
-  searchParams: { blockNumber?: string }
-}
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
-export default function Page({ searchParams }: PageProps) {
-  const blockNumber = searchParams.blockNumber || "0"
+export default async function BlockPage(props: { searchParams: SearchParams }) {
+  const searchParams = await props.searchParams
+  const blockNumber = searchParams.blockNumber
+  const blockNumberString = Array.isArray(blockNumber) ? blockNumber[0] : blockNumber
 
-  return <BlockDetail blockNumber={blockNumber} />
+  if (!blockNumberString) {
+    notFound()
+  }
+
+  return <BlockDetail blockNumber={blockNumberString} />
 }
 
