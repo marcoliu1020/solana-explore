@@ -1,6 +1,7 @@
+import { cn } from "@/lib/utils"
+import { formatDistanceToNow } from "date-fns"
 import { Copy } from "lucide-react"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
 
 type Props = {
   blockNumber: number
@@ -8,7 +9,7 @@ type Props = {
   transactions: number
   rewards: number
   validator: string
-  time: number
+  time: number // unix timestamp (13 digits)
   className?: string
 }
 
@@ -24,7 +25,7 @@ export function BlockCard({
   return (
     <div className={cn("rounded-lg bg-gray-900/30 border border-gray-800 p-4 space-y-3", className)}>
       <div className="flex justify-between items-center">
-        <div className="text-base text-gray-400">BLOCK</div>
+        <div className="text-base font-bold text-gray-400">BLOCK NUMBER</div>
         <div className="text-indigo-400">{blockNumber}</div>
       </div>
 
@@ -60,7 +61,7 @@ export function BlockCard({
         <Link href={`/block?blockNumber=${blockNumber}`}>
           <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded-md">View</button>
         </Link>
-        <div className="text-sm text-gray-400">{time}</div>
+        <div className="text-sm text-gray-400">{formatDistanceToNow(new Date(time))}</div>
       </div>
     </div>
   )

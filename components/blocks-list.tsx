@@ -33,7 +33,7 @@ export default function BlocksList() {
             transactions={block.data.numberOfTransactions}
             rewards={block.data.numberOfRewards}
             validator={block.data.producer}
-            time={block.data.blockTime}
+            time={block.data.blockTime * 1000}
           />
         ))}
         <Pagination
@@ -54,7 +54,7 @@ export default function BlocksList() {
           transactions: block.data.numberOfTransactions,
           rewards: block.data.numberOfRewards,
           validator: block.data.producer,
-          time: block.data.blockTime,
+          time: block.data.blockTime * 1000,
         }))} />
         <Pagination
           className="mt-4"

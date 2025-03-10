@@ -1,3 +1,4 @@
+import { formatDistanceToNow } from "date-fns"
 import { Copy } from "lucide-react"
 import Link from "next/link"
 
@@ -7,7 +8,7 @@ type BlockTableItem = {
   transactions: number
   rewards: number
   validator: string
-  time: number
+  time: number // unix timestamp (13 digits)
 }
 
 type Props = {
@@ -16,7 +17,7 @@ type Props = {
 
 export function BlocksTable({ blocks }: Props) {
   return (
-    <div className="mt-4 rounded-lg border border-gray-800 overflow-hidden">
+    <div className="rounded-lg border border-gray-800 overflow-hidden">
       <table className="w-full">
         <thead>
           <tr className="text-gray-400 text-sm border-b border-gray-800">
@@ -63,7 +64,7 @@ export function BlocksTable({ blocks }: Props) {
                   <Copy className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-300" />
                 </div>
               </td>
-              <td className="p-4 text-gray-400">{block.time}</td>
+              <td className="p-4 text-gray-400">{formatDistanceToNow(new Date(block.time))} ago</td>
               <td className="p-4">
                 <Link href={`/block?blockNumber=${block.blockNumber}`}>
                   <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded-md">
