@@ -5,6 +5,8 @@ type StateProps = {
   currentPage: number
   totalPages: number
   pageSize: number
+  pageSizeOptions?: number[]
+  className?: string
 }
 
 type ActionsProps = {
@@ -12,13 +14,19 @@ type ActionsProps = {
   onPageSizeChange: (size: number) => void
 }
 
-type Props = StateProps & ActionsProps & React.ComponentProps<"div">
+type Props = StateProps & ActionsProps
 
-export function Pagination({ currentPage, totalPages, pageSize, className, onPageChange, onPageSizeChange, ...props }: Props) {
-  const pageSizeOptions = [20, 50, 100]
-
+export function Pagination({
+  currentPage,
+  totalPages,
+  pageSize,
+  pageSizeOptions = [5, 10, 20, 40],
+  className,
+  onPageChange,
+  onPageSizeChange
+}: Props) {
   return (
-    <div className={cn("flex items-center justify-between text-sm text-gray-400", className)} {...props}>
+    <div className={cn("flex items-center justify-between text-sm text-gray-400", className)}>
       <div className="flex items-center gap-2">
         <span>Rows Per Page:</span>
         <select
