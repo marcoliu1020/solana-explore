@@ -2,12 +2,12 @@ import { Copy } from "lucide-react"
 import Link from "next/link"
 
 type BlockTableItem = {
-  id: string | number
+  blockNumber: number
   hash: string
   transactions: number
-  rewards: string | number
+  rewards: number
   validator: string
-  time: string
+  time: number
 }
 
 type Props = {
@@ -31,10 +31,10 @@ export function BlocksTable({ blocks }: Props) {
         </thead>
         <tbody>
           {blocks.map((block) => (
-            <tr key={block.id} className="border-b border-gray-800/50 bg-gray-900/30 hover:bg-gray-900/50">
+            <tr key={block.blockNumber} className="border-b border-gray-800/50 bg-gray-900/30 hover:bg-gray-900/50">
               <td className="p-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-indigo-400 cursor-pointer hover:text-indigo-300">{block.id}</span>
+                  <span className="text-indigo-400 cursor-pointer hover:text-indigo-300">{block.blockNumber}</span>
                   <Copy className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-300" />
                 </div>
               </td>
@@ -65,7 +65,7 @@ export function BlocksTable({ blocks }: Props) {
               </td>
               <td className="p-4 text-gray-400">{block.time}</td>
               <td className="p-4">
-                <Link href={`/block?blockNumber=${block.id}`}>
+                <Link href={`/block?blockNumber=${block.blockNumber}`}>
                   <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded-md">
                     View
                   </button>
