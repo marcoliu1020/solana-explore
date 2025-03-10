@@ -3,7 +3,7 @@ import { formatDistanceToNow } from "date-fns"
 import { Copy } from "lucide-react"
 import Link from "next/link"
 
-type BlockItem = {
+export type BlockItem = {
   blockNumber: number
   hash: string
   transactions: number
