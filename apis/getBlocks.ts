@@ -32,22 +32,21 @@ export type Blocks = {
 
 export const url = new URL('blocks', SOLANA_FM_URL);
 
-type QueryParams = {
-    from?: string
+export type QueryParams = {
+    from?: string // block number
     pageSize?: number
-    paginationType?: 'blockNumber' | 'blockTime'
-    reverse?: boolean
+    paginationType?: 'blockNumber' | 'blockTime' // default: blockNumber
+    reverse?: boolean // default: false
 }
 
 export async function getBlocks(queryParams: QueryParams): Promise<Blocks> {
-    const searchParams = new URLSearchParams({
-        from: queryParams.from ?? '',
-        pageSize: queryParams.pageSize?.toString() ?? '',
-        paginationType: queryParams.paginationType ?? '',
-        reverse: queryParams.reverse?.toString() ?? ''
-    }).toString();
+    const searchParams = new URLSearchParams();
+    if (queryParams.from) searchParams.append('from', queryParams.from);
+    if (queryParams.pageSize) searchParams.append('pageSize', queryParams.pageSize.toString());
+    if (queryParams.paginationType) searchParams.append('paginationType', queryParams.paginationType);
+    if (queryParams.reverse) searchParams.append('reverse', queryParams.reverse.toString());
 
-    const requestUrl = `${url}?${searchParams}`;
+    const requestUrl = `${url}?${searchParams.toString()}`;
     const res = await fetch(requestUrl);
     const data = await res.json();
 
