@@ -7,13 +7,13 @@ import { useBlocks } from "@/hooks/useBlocks"
 
 export default function BlocksList() {
   const [currentPage, setCurrentPage] = useState(1)
-  const [currentBlockNumber, setCurrentBlockNumber] = useState("")
+  const [currentBlockNumber, setCurrentBlockNumber] = useState(-1)
   const [pageSize, setPageSize] = useState(5)
-  const { data, error, isLoading, isValidating, previousBlockNumber, nextBlockNumber } = useBlocks({
-    from: currentBlockNumber,
+  const { data, error, isLoading, isValidating, previousBlockNumber, nextBlockNumber, totalBlocks } = useBlocks({
+    from: currentBlockNumber <= 0 ? "" : String(currentBlockNumber),
     pageSize: pageSize,
   })
-  const totalPages = 5508032 // This would normally come from an API
+  const totalPages = Math.ceil(totalBlocks / pageSize)
 
   // blocks data
   const blocks = data?.data
@@ -28,16 +28,16 @@ export default function BlocksList() {
     const isNextPage = page === currentPage + 1 && nextBlockNumber
 
     if (isFirstPage) {
-      setCurrentBlockNumber("")
+      setCurrentBlockNumber(-1)
       setCurrentPage(page)
     } else if (isLastPage) {
-      setCurrentBlockNumber("1") // first block number
+      setCurrentBlockNumber(1) // first block number
       setCurrentPage(page)
     } else if (isNextPage) {
-      setCurrentBlockNumber(nextBlockNumber?.toString() ?? "")
+      setCurrentBlockNumber(nextBlockNumber ?? 0)
       setCurrentPage(page)
     } else if (isPreviousPage) {
-      setCurrentBlockNumber(previousBlockNumber?.toString() ?? "")
+      setCurrentBlockNumber(previousBlockNumber ?? 0)
       setCurrentPage(page)
     } else {
       alert("Invalid page")
@@ -48,51 +48,51 @@ export default function BlocksList() {
   if (error) return <div>Error: {error.message}</div>
   if (!blocks) return <div>No blocks</div>
   return (
-      <div className="bg-black text-white p-4 min-h-screen">
-        {/* Mobile & Tablet View */}
-        <MobileView>
-          <PageTitle title="Blocks" />
-          {blocks.map((block) => (
-            <BlockCard
-              key={block.blockNumber}
-              blockNumber={block.blockNumber}
-              hash={block.data.hash}
-              transactions={block.data.numberOfTransactions}
-              rewards={block.data.numberOfRewards}
-              validator={block.data.producer}
-              time={block.data.blockTime * 1000}
-            />
-          ))}
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            pageSize={pageSize}
-            onPageChange={handlePageChange}
-            onPageSizeChange={setPageSize}
+    <div className="bg-black text-white p-4 min-h-screen">
+      {/* Mobile & Tablet View */}
+      <MobileView>
+        <PageTitle title="Blocks" />
+        {blocks.map((block) => (
+          <BlockCard
+            key={block.blockNumber}
+            blockNumber={block.blockNumber}
+            hash={block.data.hash}
+            transactions={block.data.numberOfTransactions}
+            rewards={block.data.numberOfRewards}
+            validator={block.data.producer}
+            time={block.data.blockTime * 1000}
           />
-        </MobileView>
+        ))}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          pageSize={pageSize}
+          onPageChange={handlePageChange}
+          onPageSizeChange={setPageSize}
+        />
+      </MobileView>
 
-        {/* Desktop View */}
-        <DesktopView>
-          <PageTitle title="Blocks" />
-          <BlocksTable className="mt-4" blocks={blocks.map(block => ({
-            blockNumber: block.blockNumber,
-            hash: block.data.hash,
-            transactions: block.data.numberOfTransactions,
-            rewards: block.data.numberOfRewards,
-            validator: block.data.producer,
-            time: block.data.blockTime * 1000,
-          }))} />
-          <Pagination
-            className="mt-4"
-            currentPage={currentPage}
-            totalPages={totalPages}
-            pageSize={pageSize}
-            onPageChange={handlePageChange}
-            onPageSizeChange={setPageSize}
-          />
-        </DesktopView>
-      </div>
+      {/* Desktop View */}
+      <DesktopView>
+        <PageTitle title="Blocks" />
+        <BlocksTable className="mt-4" blocks={blocks.map(block => ({
+          blockNumber: block.blockNumber,
+          hash: block.data.hash,
+          transactions: block.data.numberOfTransactions,
+          rewards: block.data.numberOfRewards,
+          validator: block.data.producer,
+          time: block.data.blockTime * 1000,
+        }))} />
+        <Pagination
+          className="mt-4"
+          currentPage={currentPage}
+          totalPages={totalPages}
+          pageSize={pageSize}
+          onPageChange={handlePageChange}
+          onPageSizeChange={setPageSize}
+        />
+      </DesktopView>
+    </div>
   )
 }
 
