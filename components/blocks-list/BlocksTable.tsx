@@ -1,8 +1,9 @@
+import { cn } from "@/lib/utils"
 import { formatDistanceToNow } from "date-fns"
 import { Copy } from "lucide-react"
 import Link from "next/link"
 
-type BlockTableItem = {
+type BlockItem = {
   blockNumber: number
   hash: string
   transactions: number
@@ -12,12 +13,13 @@ type BlockTableItem = {
 }
 
 type Props = {
-  blocks: BlockTableItem[]
-}
+  blocks: BlockItem[]
+  className?: string
+} 
 
-export function BlocksTable({ blocks }: Props) {
+export function BlocksTable({ blocks, className }: Props) {
   return (
-    <div className="rounded-lg border border-gray-800 overflow-hidden">
+    <div className={cn("rounded-lg border border-gray-800 overflow-hidden", className)}>
       <table className="w-full">
         <thead>
           <tr className="text-gray-400 text-sm border-b border-gray-800">
