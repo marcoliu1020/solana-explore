@@ -1,9 +1,9 @@
 "use client"
-import { useState } from "react"
 import { BlockCard } from "@/components/block-card"
-import { Pagination } from "@/components/pagination"
 import { BlocksTable } from "@/components/blocks-list/BlocksTable"
+import { Pagination } from "@/components/pagination"
 import { useBlocks } from "@/hooks/useBlocks"
+import { useState } from "react"
 
 export default function BlocksList() {
   const [currentPage, setCurrentPage] = useState(1)
