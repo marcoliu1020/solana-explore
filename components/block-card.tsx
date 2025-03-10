@@ -3,7 +3,7 @@ import { formatDistanceToNow } from "date-fns"
 import { Copy } from "lucide-react"
 import Link from "next/link"
 
-type BlockCardItem = {
+type BlockItem = {
   blockNumber: number
   hash: string
   transactions: number
@@ -12,7 +12,7 @@ type BlockCardItem = {
   time: number // unix timestamp (13 digits)
 }
 
-type Props = BlockCardItem & {
+type Props = BlockItem & {
   className?: string
 }
 
