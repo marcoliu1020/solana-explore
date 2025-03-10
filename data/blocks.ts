@@ -1,4 +1,4 @@
-export interface Block {
+export type Block = {
   id: string
   hash: string
   transactions: number
@@ -17,77 +17,45 @@ export function getBlocks() {
 }
 
 export const mockBlocks: Block[] = [
-  {
-    id: "325401570",
-    hash: "3yYXJFDqiTm...",
-    transactions: 1765,
-    rewards: 1,
-    validator: "FZ4MT1HYJHd...",
-    efficiency: { used: "21.3M", total: "48M", percentage: 44.4 },
-    time: "an hour ago",
-  },
-  {
-    id: "325401569",
-    hash: "A1KhLc28s78...",
-    transactions: 1814,
-    rewards: 1,
-    validator: "FZ4MT1HYJHd...",
-    efficiency: { used: "20.4M", total: "48M", percentage: 42.54 },
-    time: "an hour ago",
-  },
-  {
-    id: "325401568",
-    hash: "H2JXDbtEv3o...",
-    transactions: 2000,
-    rewards: 1,
-    validator: "FZ4MT1HYJHd...",
-    efficiency: { used: "20.6M", total: "48M", percentage: 42.87 },
-    time: "an hour ago",
-  },
-  {
-    id: "325401567",
-    hash: "6oqpJQyiqHV...",
-    transactions: 1612,
-    rewards: 1,
-    validator: "DRpbCBMxVnD...",
-    efficiency: { used: "29.9M", total: "48M", percentage: 62.26 },
-    time: "an hour ago",
-  },
-  {
-    id: "325401566",
-    hash: "FWuGt4zuDeG...",
-    transactions: 1787,
-    rewards: 1,
-    validator: "DRpbCBMxVnD...",
-    efficiency: { used: "23.4M", total: "48M", percentage: 48.79 },
-    time: "an hour ago",
-  },
-  {
-    id: "325401565",
-    hash: "2aFjR4RQd2f...",
-    transactions: 1751,
-    rewards: 1,
-    validator: "DRpbCBMxVnD...",
-    efficiency: { used: "15.1M", total: "48M", percentage: 31.37 },
-    time: "an hour ago",
-  },
-  {
-    id: "325401564",
-    hash: "6MySe1cPdSX...",
-    transactions: 2135,
-    rewards: 1,
-    validator: "DRpbCBMxVnD...",
-    efficiency: { used: "23.5M", total: "48M", percentage: 48.95 },
-    time: "an hour ago",
-  },
-  {
-    id: "325401563",
-    hash: "DyLJ8BZNsb3...",
-    transactions: 1730,
-    rewards: 1,
-    validator: "9rkJMARqK6V...",
-    efficiency: { used: "17.7M", total: "48M", percentage: 36.78 },
-    time: "an hour ago",
-  },
+  // Generate 100 unique blocks with varying data
+  ...Array.from({ length: 100 }, (_, i) => {
+    const id = String(i + 1).padStart(3, '0');
+    const validators = [
+      "FZ4MT1HYJHd8X6v",
+      "DRpbCBMxVnD7Kp2",
+      "9rkJMARqK6V3Ls8",
+      "H2NkX9YmP4qR5Wt",
+      "T7vBgQ8cL3nM6Uj"
+    ];
+    
+    const getRandomHash = () => {
+      const chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+      return Array.from({ length: 11 }, () => chars[Math.floor(Math.random() * chars.length)]).join('') + '...';
+    };
+    
+    const getRandomTime = () => {
+      const times = ['a minute ago', '2 minutes ago', '5 minutes ago', '10 minutes ago', 'an hour ago'];
+      return times[Math.floor(Math.random() * times.length)];
+    };
+    
+    const transactions = Math.floor(Math.random() * (2500 - 1000) + 1000);
+    const used = (Math.random() * (35 - 15) + 15).toFixed(1);
+    const total = "48M";
+    const percentage = (parseFloat(used) / 48 * 100).toFixed(2);
+    
+    return {
+      id,
+      hash: getRandomHash(),
+      transactions,
+      rewards: Math.floor(Math.random() * 3) + 1,
+      validator: validators[Math.floor(Math.random() * validators.length)],
+      efficiency: {
+        used: `${used}M`,
+        total,
+        percentage: parseFloat(percentage)
+      },
+      time: getRandomTime()
+    };
+  }).sort((a, b) => parseInt(b.id) - parseInt(a.id))
 ]
 
