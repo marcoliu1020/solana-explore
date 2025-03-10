@@ -12,6 +12,10 @@ export interface Block {
   time: string
 }
 
+export function getBlocks() {
+  return mockBlocks
+}
+
 export const mockBlocks: Block[] = [
   {
     id: "325401570",
