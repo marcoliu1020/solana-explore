@@ -41,7 +41,7 @@ export function BlocksTable({ blocks }: Props) {
               </td>
               <td className="p-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-indigo-400 cursor-pointer hover:text-indigo-300">{block.hash}</span>
+                  <span className="text-ellipsis overflow-hidden max-w-[8rem] text-indigo-400">{block.hash}</span>
                   <Copy className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-300" />
                 </div>
               </td>
@@ -60,7 +60,7 @@ export function BlocksTable({ blocks }: Props) {
               <td className="p-4">
                 <div className="flex items-center gap-2">
                   <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center text-xs">V</div>
-                  <span className="text-indigo-400">{block.validator}</span>
+                  <span className="text-ellipsis overflow-hidden max-w-[8rem] text-indigo-400">{block.validator}</span>
                   <Copy className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-300" />
                 </div>
               </td>

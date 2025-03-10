@@ -33,7 +33,7 @@ export function BlockCard({
         <div className="flex justify-between items-center">
           <div className="text-sm text-gray-400">BLOCK HASH</div>
           <div className="flex items-center gap-2">
-            <span className="text-indigo-400">{hash}</span>
+            <span className="text-indigo-400 text-ellipsis overflow-hidden max-w-[8rem]">{hash}</span>
             <Copy className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-300" />
           </div>
         </div>
@@ -51,7 +51,7 @@ export function BlockCard({
         <div className="flex justify-between items-center">
           <div className="text-sm text-gray-400">VALIDATOR</div>
           <div className="flex items-center gap-2">
-            <span className="text-indigo-400">{validator}</span>
+            <span className="text-indigo-400 text-ellipsis overflow-hidden max-w-[8rem]">{validator}</span>
             <Copy className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-300" />
           </div>
         </div>
