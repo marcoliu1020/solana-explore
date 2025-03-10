@@ -48,7 +48,7 @@ export default function BlocksList() {
       {/* Desktop View */}
       <DesktopView>
         <PageTitle title="Blocks" />
-        <BlocksTable blocks={blocks.map(block => ({
+        <BlocksTable className="mt-4" blocks={blocks.map(block => ({
           blockNumber: block.blockNumber,
           hash: block.data.hash,
           transactions: block.data.numberOfTransactions,
@@ -78,5 +78,5 @@ function MobileView({ children }: { children: React.ReactNode }) {
 }
 
 function DesktopView({ children }: { children: React.ReactNode }) {
-  return <div className="hidden lg:block">{children}</div>
+  return <div className="max-w-6xl mx-auto hidden lg:block">{children}</div>
 }
