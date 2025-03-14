@@ -23,16 +23,14 @@ export default function BlocksList() {
     from: pivotBlockNumber <= 0 ? '' : String(pivotBlockNumber),
     pageSize: 100,
   })
+  console.log(blocks)
 
   // total pages
   const { latestBlock } = useLatestBlock()
   const [pageSize, setPageSize] = useState(5)
   const totalBlocks = latestBlock?.blockNumber ?? 0
   const totalPages = Math.ceil(totalBlocks / pageSize)
-
-  // blocks data
-  console.log(blocks)
-
+  
   const handlePageChange = (page: number) => {
     if (isValidating) return // prevent double clicks
 
