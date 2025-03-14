@@ -1,5 +1,10 @@
 import { cn } from '@/lib/utils'
-import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from 'lucide-react'
+import {
+  ChevronFirst,
+  ChevronLast,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react'
 
 type StateProps = {
   currentPage: number
@@ -26,7 +31,12 @@ export function Pagination({
   onPageSizeChange,
 }: Props) {
   return (
-    <div className={cn('flex items-center justify-between text-sm text-gray-400', className)}>
+    <div
+      className={cn(
+        'flex items-center justify-between text-sm text-gray-400',
+        className,
+      )}
+    >
       <div className="flex items-center gap-2">
         <span>Rows Per Page:</span>
         <select

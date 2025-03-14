@@ -22,7 +22,9 @@ const mockTransactions: Transaction[] = Array(10).fill({
   fee: 0.00005,
 })
 
-export function TransactionsList({ transactions = mockTransactions }: TransactionsListProps) {
+export function TransactionsList({
+  transactions = mockTransactions,
+}: TransactionsListProps) {
   const [pageSize, setPageSize] = useState(10)
   const [currentPage, setCurrentPage] = useState(1)
   const totalPages = 2 // This would normally be calculated from total transactions
@@ -61,22 +63,31 @@ export function TransactionsList({ transactions = mockTransactions }: Transactio
             </thead>
             <tbody>
               {mockTransactions.map((transaction, index) => (
-                <tr key={index} className="border-b border-gray-800/50 bg-gray-900/30 hover:bg-gray-900/50">
+                <tr
+                  key={index}
+                  className="border-b border-gray-800/50 bg-gray-900/30 hover:bg-gray-900/50"
+                >
                   <td className="p-4">
                     <div className="flex items-center gap-2">
-                      <span className="text-indigo-400">{transaction.program}</span>
+                      <span className="text-indigo-400">
+                        {transaction.program}
+                      </span>
                       <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
                     </div>
                   </td>
                   <td className="p-4">
                     <div className="flex items-center gap-2">
-                      <span className="text-indigo-400">{transaction.signature}</span>
+                      <span className="text-indigo-400">
+                        {transaction.signature}
+                      </span>
                       <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
                     </div>
                   </td>
                   <td className="p-4">
                     <div className="flex items-center gap-2">
-                      <span className="text-indigo-400">{transaction.signer}</span>
+                      <span className="text-indigo-400">
+                        {transaction.signer}
+                      </span>
                       <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
                     </div>
                   </td>

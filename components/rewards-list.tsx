@@ -33,12 +33,17 @@ export function RewardsList({ rewards, totalPages = 1 }: RewardsListProps) {
 
       <div className="divide-y divide-gray-800">
         {rewards.map((reward, index) => (
-          <div key={index} className="flex flex-col p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div
+            key={index}
+            className="flex flex-col p-4 sm:flex-row sm:items-center sm:justify-between"
+          >
             <div className="mb-2 flex items-center gap-3 sm:mb-0">
               <span
                 className={cn(
                   'rounded-md px-2 py-1 text-xs font-medium',
-                  reward.type === 'Rent' ? 'bg-amber-950 text-amber-500' : 'bg-blue-950 text-blue-500',
+                  reward.type === 'Rent'
+                    ? 'bg-amber-950 text-amber-500'
+                    : 'bg-blue-950 text-blue-500',
                 )}
               >
                 {reward.type}
@@ -54,8 +59,15 @@ export function RewardsList({ rewards, totalPages = 1 }: RewardsListProps) {
               <button className="shrink-0">
                 <Copy className="h-4 w-4 text-gray-500 hover:text-gray-300" />
               </button>
-              <span className={cn('font-mono text-sm', reward.amount < 0 ? 'text-red-500' : 'text-green-500')}>
-                {reward.amount.toFixed(reward.amount < 0.0001 && reward.amount > -0.0001 ? 10 : 5)}
+              <span
+                className={cn(
+                  'font-mono text-sm',
+                  reward.amount < 0 ? 'text-red-500' : 'text-green-500',
+                )}
+              >
+                {reward.amount.toFixed(
+                  reward.amount < 0.0001 && reward.amount > -0.0001 ? 10 : 5,
+                )}
               </span>
             </div>
           </div>

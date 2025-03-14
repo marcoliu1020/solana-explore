@@ -1,4 +1,5 @@
 'use client'
+
 import { BlockCard } from '@/components/block-card'
 import { BlocksTable } from '@/components/blocks-list/BlocksTable'
 import { Pagination } from '@/components/pagination'
@@ -9,7 +10,15 @@ export default function BlocksList() {
   const [currentPage, setCurrentPage] = useState(1)
   const [currentBlockNumber, setCurrentBlockNumber] = useState(-1)
   const [pageSize, setPageSize] = useState(5)
-  const { data, error, isLoading, isValidating, previousBlockNumber, nextBlockNumber, totalBlocks } = useBlocks({
+  const {
+    data,
+    error,
+    isLoading,
+    isValidating,
+    previousBlockNumber,
+    nextBlockNumber,
+    totalBlocks,
+  } = useBlocks({
     from: currentBlockNumber <= 0 ? '' : String(currentBlockNumber),
     pageSize: pageSize,
   })

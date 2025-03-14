@@ -4,9 +4,13 @@ import useSWR from 'swr'
 
 export function useBlocks(queryParams: QueryParams = {}) {
   const args = ['/getBlocks', ...Object.values(queryParams)]
-  const { data, error, isLoading, isValidating } = useSWR(args, () => getBlocks(queryParams), {
-    keepPreviousData: true,
-  })
+  const { data, error, isLoading, isValidating } = useSWR(
+    args,
+    () => getBlocks(queryParams),
+    {
+      keepPreviousData: true,
+    },
+  )
 
   // pagination
   const previousBlockNumber = data?.pagination.previous
@@ -18,5 +22,13 @@ export function useBlocks(queryParams: QueryParams = {}) {
     if (!totalBlocks) setTotalBlocks(data.data[0].blockNumber)
   }
 
-  return { data, error, isLoading, isValidating, previousBlockNumber, nextBlockNumber, totalBlocks }
+  return {
+    data,
+    error,
+    isLoading,
+    isValidating,
+    previousBlockNumber,
+    nextBlockNumber,
+    totalBlocks,
+  }
 }

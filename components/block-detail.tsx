@@ -31,9 +31,13 @@ export function BlockDetail({ blockNumber }: BlockDetailProps) {
               className="hidden sm:block"
             />
             <div>
-              <h1 className="text-2xl font-bold sm:text-3xl">{blockData.number}</h1>
+              <h1 className="text-2xl font-bold sm:text-3xl">
+                {blockData.number}
+              </h1>
               <div className="mt-1 flex items-center gap-2">
-                <span className="text-sm break-all text-gray-400">{blockData.hash}</span>
+                <span className="text-sm break-all text-gray-400">
+                  {blockData.hash}
+                </span>
                 <Copy className="h-4 w-4 shrink-0 cursor-pointer text-gray-500 hover:text-gray-300" />
               </div>
             </div>
@@ -62,7 +66,9 @@ export function BlockDetail({ blockNumber }: BlockDetailProps) {
           <div className="rounded-lg bg-gray-900/30 p-4">
             <div className="mb-2 text-sm text-gray-400">LEADER</div>
             <div className="flex items-center gap-2">
-              <span className="break-all text-indigo-400">{blockData.leader}</span>
+              <span className="break-all text-indigo-400">
+                {blockData.leader}
+              </span>
               <Copy className="h-4 w-4 shrink-0 cursor-pointer text-gray-500 hover:text-gray-300" />
             </div>
           </div>
@@ -78,7 +84,9 @@ export function BlockDetail({ blockNumber }: BlockDetailProps) {
           <div className="rounded-lg bg-gray-900/30 p-4">
             <div className="mb-2 text-sm text-gray-400">PARENT BLOCKHASH</div>
             <div className="flex items-center gap-2">
-              <span className="break-all text-indigo-400">{blockData.parentBlockHash}</span>
+              <span className="break-all text-indigo-400">
+                {blockData.parentBlockHash}
+              </span>
               <Copy className="h-4 w-4 shrink-0 cursor-pointer text-gray-500 hover:text-gray-300" />
             </div>
           </div>
@@ -97,7 +105,8 @@ export function BlockDetail({ blockNumber }: BlockDetailProps) {
           <div>
             <div className="mb-2 text-sm text-gray-400">TRANSACTIONS</div>
             <div>
-              {blockData.transactions.count} ({blockData.transactions.successRate} Successful)
+              {blockData.transactions.count} (
+              {blockData.transactions.successRate} Successful)
             </div>
           </div>
 

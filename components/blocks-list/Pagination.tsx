@@ -1,4 +1,9 @@
-import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from 'lucide-react'
+import {
+  ChevronFirst,
+  ChevronLast,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react'
 
 interface PaginationProps {
   currentPage: number
@@ -8,7 +13,13 @@ interface PaginationProps {
   onPageSizeChange: (size: number) => void
 }
 
-export function Pagination({ currentPage, totalPages, pageSize, onPageChange, onPageSizeChange }: PaginationProps) {
+export function Pagination({
+  currentPage,
+  totalPages,
+  pageSize,
+  onPageChange,
+  onPageSizeChange,
+}: PaginationProps) {
   const pageSizeOptions = [20, 50, 100]
 
   return (

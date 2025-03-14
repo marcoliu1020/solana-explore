@@ -16,9 +16,22 @@ type Props = BlockItem & {
   className?: string
 }
 
-export function BlockCard({ blockNumber, hash, transactions, rewards, validator, time, className }: Props) {
+export function BlockCard({
+  blockNumber,
+  hash,
+  transactions,
+  rewards,
+  validator,
+  time,
+  className,
+}: Props) {
   return (
-    <div className={cn('space-y-3 rounded-lg border border-gray-800 bg-gray-900/30 p-4', className)}>
+    <div
+      className={cn(
+        'space-y-3 rounded-lg border border-gray-800 bg-gray-900/30 p-4',
+        className,
+      )}
+    >
       <div className="flex items-center justify-between">
         <div className="text-base font-bold text-gray-400">BLOCK NUMBER</div>
         <div className="text-indigo-400">{blockNumber}</div>
@@ -28,7 +41,9 @@ export function BlockCard({ blockNumber, hash, transactions, rewards, validator,
         <div className="flex items-center justify-between">
           <div className="text-sm text-gray-400">BLOCK HASH</div>
           <div className="flex items-center gap-2">
-            <span className="max-w-[8rem] overflow-hidden text-ellipsis text-indigo-400">{hash}</span>
+            <span className="max-w-[8rem] overflow-hidden text-ellipsis text-indigo-400">
+              {hash}
+            </span>
             <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
           </div>
         </div>
@@ -46,7 +61,9 @@ export function BlockCard({ blockNumber, hash, transactions, rewards, validator,
         <div className="flex items-center justify-between">
           <div className="text-sm text-gray-400">VALIDATOR</div>
           <div className="flex items-center gap-2">
-            <span className="max-w-[8rem] overflow-hidden text-ellipsis text-indigo-400">{validator}</span>
+            <span className="max-w-[8rem] overflow-hidden text-ellipsis text-indigo-400">
+              {validator}
+            </span>
             <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
           </div>
         </div>
@@ -54,9 +71,13 @@ export function BlockCard({ blockNumber, hash, transactions, rewards, validator,
 
       <div className="flex items-center justify-between pt-1">
         <Link href={`/block?blockNumber=${blockNumber}`}>
-          <button className="rounded-md bg-indigo-600 px-4 py-1.5 text-white hover:bg-indigo-700">View</button>
+          <button className="rounded-md bg-indigo-600 px-4 py-1.5 text-white hover:bg-indigo-700">
+            View
+          </button>
         </Link>
-        <div className="text-sm text-gray-400">{formatDistanceToNow(new Date(time))}</div>
+        <div className="text-sm text-gray-400">
+          {formatDistanceToNow(new Date(time))}
+        </div>
       </div>
     </div>
   )
