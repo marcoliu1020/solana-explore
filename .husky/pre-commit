@@ -1,4 +1,8 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx lint-staged
+# Run ESLint
+pnpm run lint
+
+# Run Prettier (optional)
+pnpm run format
