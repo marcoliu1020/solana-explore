@@ -4,28 +4,33 @@ import { BlockCard } from '@/components/block-card'
 import { BlocksTable } from '@/components/blocks-list/BlocksTable'
 import { Pagination } from '@/components/pagination'
 import { useBlocks } from '@/hooks/useBlocks'
+import { useLatestBlock } from '@/hooks/useLatestBlock'
 import { useState } from 'react'
 
 export default function BlocksList() {
   const [currentPage, setCurrentPage] = useState(1)
-  const [currentBlockNumber, setCurrentBlockNumber] = useState(-1)
-  const [pageSize, setPageSize] = useState(5)
+  const [pivotBlockNumber, setPivotBlockNumber] = useState(-1)
+
+  // blocks data
   const {
-    data,
     error,
     isLoading,
     isValidating,
+    blocks,
     previousBlockNumber,
     nextBlockNumber,
-    totalBlocks,
   } = useBlocks({
-    from: currentBlockNumber <= 0 ? '' : String(currentBlockNumber),
-    pageSize: pageSize,
+    from: pivotBlockNumber <= 0 ? '' : String(pivotBlockNumber),
+    pageSize: 100,
   })
+
+  // total pages
+  const { latestBlock } = useLatestBlock()
+  const [pageSize, setPageSize] = useState(5)
+  const totalBlocks = latestBlock?.blockNumber ?? 0
   const totalPages = Math.ceil(totalBlocks / pageSize)
 
   // blocks data
-  const blocks = data?.data
   console.log(blocks)
 
   const handlePageChange = (page: number) => {
@@ -37,16 +42,16 @@ export default function BlocksList() {
     const isNextPage = page === currentPage + 1 && nextBlockNumber
 
     if (isFirstPage) {
-      setCurrentBlockNumber(-1)
+      setPivotBlockNumber(-1)
       setCurrentPage(page)
     } else if (isLastPage) {
-      setCurrentBlockNumber(1) // first block number
+      setPivotBlockNumber(1) // first block number
       setCurrentPage(page)
     } else if (isNextPage) {
-      setCurrentBlockNumber(nextBlockNumber ?? 0)
+      setPivotBlockNumber(nextBlockNumber ?? 0)
       setCurrentPage(page)
     } else if (isPreviousPage) {
-      setCurrentBlockNumber(previousBlockNumber ?? 0)
+      setPivotBlockNumber(previousBlockNumber ?? 0)
       setCurrentPage(page)
     } else {
       alert('Invalid page')

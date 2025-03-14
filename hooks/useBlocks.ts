@@ -11,7 +11,8 @@ export function useBlocks(queryParams: QueryParams = {}) {
     },
   )
 
-  // pagination
+  // blocks data
+  const blocks = data?.data
   const previousBlockNumber = data?.pagination.previous
   const nextBlockNumber = data?.pagination.next
 
@@ -20,6 +21,8 @@ export function useBlocks(queryParams: QueryParams = {}) {
     error,
     isLoading,
     isValidating,
+    // blocks data
+    blocks,
     previousBlockNumber,
     nextBlockNumber,
   }
