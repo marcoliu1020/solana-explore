@@ -7,10 +7,13 @@ export function useLatestBlock() {
     () => getBlocks({ pageSize: 1 }),
   )
 
+  const latestBlock = data?.data[0]
+
   return {
     data,
     error,
     isLoading,
     isValidating,
+    latestBlock,
   }
 }
