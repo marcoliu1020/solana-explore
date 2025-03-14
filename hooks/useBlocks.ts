@@ -1,6 +1,6 @@
-import { getBlocks, type QueryParams } from "@/apis/getBlocks"
-import { useState } from "react"
-import useSWR from "swr"
+import { getBlocks, type QueryParams } from '@/apis/getBlocks'
+import { useState } from 'react'
+import useSWR from 'swr'
 
 export function useBlocks(queryParams: QueryParams = {}) {
   const args = ['/getBlocks', ...Object.values(queryParams)]
@@ -11,7 +11,7 @@ export function useBlocks(queryParams: QueryParams = {}) {
   // pagination
   const previousBlockNumber = data?.pagination.previous
   const nextBlockNumber = data?.pagination.next
-  
+
   // set total blocks
   const [totalBlocks, setTotalBlocks] = useState(0)
   if (data && data.data.length > 0) {

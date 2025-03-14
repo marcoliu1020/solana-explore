@@ -1,4 +1,4 @@
-import BlocksList from "@/components/blocks-list"
+import BlocksList from '@/components/blocks-list'
 
 export default async function BlocksPage() {
   return (
@@ -6,4 +6,4 @@ export default async function BlocksPage() {
       <BlocksList />
     </>
   )
-} 
+}

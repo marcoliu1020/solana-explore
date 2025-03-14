@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { RewardsList } from "@/components/rewards-list"
-import { TransactionsList } from "@/components/transactions-list"
-import { mockBlockDetail } from "@/data/block-detail"
-import { CheckCircle2, ChevronLeft, ChevronRight, Copy } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
+import { RewardsList } from '@/components/rewards-list'
+import { TransactionsList } from '@/components/transactions-list'
+import { mockBlockDetail } from '@/data/block-detail'
+import { CheckCircle2, ChevronLeft, ChevronRight, Copy } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
 
 interface BlockDetailProps {
   blockNumber: string
@@ -18,10 +18,10 @@ export function BlockDetail({ blockNumber }: BlockDetailProps) {
   const nextBlockNumber = Number.parseInt(blockNumber) + 1
 
   return (
-    <div className="min-h-screen bg-black text-white p-4 lg:p-6">
+    <div className="min-h-screen bg-black p-4 text-white lg:p-6">
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-start justify-between gap-4 mb-4">
+        <div className="mb-4 flex items-start justify-between gap-4">
           <div className="flex items-center gap-4">
             <Image
               src="/placeholder.svg?height=48&width=48"
@@ -31,91 +31,91 @@ export function BlockDetail({ blockNumber }: BlockDetailProps) {
               className="hidden sm:block"
             />
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold">{blockData.number}</h1>
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-sm text-gray-400 break-all">{blockData.hash}</span>
-                <Copy className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-300 shrink-0" />
+              <h1 className="text-2xl font-bold sm:text-3xl">{blockData.number}</h1>
+              <div className="mt-1 flex items-center gap-2">
+                <span className="text-sm break-all text-gray-400">{blockData.hash}</span>
+                <Copy className="h-4 w-4 shrink-0 cursor-pointer text-gray-500 hover:text-gray-300" />
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex shrink-0 items-center gap-2">
             <Link
               href={`/block?blockNumber=${prevBlockNumber}`}
-              className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
+              className="rounded-lg p-2 transition-colors hover:bg-gray-800"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="h-5 w-5" />
             </Link>
             <Link
               href={`/block?blockNumber=${nextBlockNumber}`}
-              className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
+              className="rounded-lg p-2 transition-colors hover:bg-gray-800"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="h-5 w-5" />
             </Link>
           </div>
         </div>
       </div>
 
       {/* Content Grid */}
-      <div className="grid lg:grid-cols-2 gap-4">
+      <div className="grid gap-4 lg:grid-cols-2">
         {/* Left Column */}
         <div className="space-y-4">
           <div className="rounded-lg bg-gray-900/30 p-4">
-            <div className="text-sm text-gray-400 mb-2">LEADER</div>
+            <div className="mb-2 text-sm text-gray-400">LEADER</div>
             <div className="flex items-center gap-2">
-              <span className="text-indigo-400 break-all">{blockData.leader}</span>
-              <Copy className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-300 shrink-0" />
+              <span className="break-all text-indigo-400">{blockData.leader}</span>
+              <Copy className="h-4 w-4 shrink-0 cursor-pointer text-gray-500 hover:text-gray-300" />
             </div>
           </div>
 
           <div className="rounded-lg bg-gray-900/30 p-4">
-            <div className="text-sm text-gray-400 mb-2">PARENT BLOCK</div>
+            <div className="mb-2 text-sm text-gray-400">PARENT BLOCK</div>
             <div className="flex items-center gap-2">
               <span className="text-indigo-400">{blockData.parentBlock}</span>
-              <Copy className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-300 shrink-0" />
+              <Copy className="h-4 w-4 shrink-0 cursor-pointer text-gray-500 hover:text-gray-300" />
             </div>
           </div>
 
           <div className="rounded-lg bg-gray-900/30 p-4">
-            <div className="text-sm text-gray-400 mb-2">PARENT BLOCKHASH</div>
+            <div className="mb-2 text-sm text-gray-400">PARENT BLOCKHASH</div>
             <div className="flex items-center gap-2">
-              <span className="text-indigo-400 break-all">{blockData.parentBlockHash}</span>
-              <Copy className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-300 shrink-0" />
+              <span className="break-all text-indigo-400">{blockData.parentBlockHash}</span>
+              <Copy className="h-4 w-4 shrink-0 cursor-pointer text-gray-500 hover:text-gray-300" />
             </div>
           </div>
         </div>
 
         {/* Right Column */}
-        <div className="rounded-lg bg-gray-900/30 p-4 space-y-4">
+        <div className="space-y-4 rounded-lg bg-gray-900/30 p-4">
           <div>
-            <div className="text-sm text-gray-400 mb-2">EPOCH</div>
+            <div className="mb-2 text-sm text-gray-400">EPOCH</div>
             <div className="flex items-center gap-2">
               <span className="text-indigo-400">{blockData.epoch}</span>
-              <Copy className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-300" />
+              <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
             </div>
           </div>
 
           <div>
-            <div className="text-sm text-gray-400 mb-2">TRANSACTIONS</div>
+            <div className="mb-2 text-sm text-gray-400">TRANSACTIONS</div>
             <div>
               {blockData.transactions.count} ({blockData.transactions.successRate} Successful)
             </div>
           </div>
 
           <div>
-            <div className="text-sm text-gray-400 mb-2">CREATED ON</div>
+            <div className="mb-2 text-sm text-gray-400">CREATED ON</div>
             <div>{blockData.createdOn}</div>
           </div>
 
           <div>
-            <div className="text-sm text-gray-400 mb-2">CONFIRMATIONS</div>
+            <div className="mb-2 text-sm text-gray-400">CONFIRMATIONS</div>
             <div className="flex items-center gap-2">
               <span>{blockData.confirmations}</span>
-              <CheckCircle2 className="w-4 h-4 text-green-500" />
+              <CheckCircle2 className="h-4 w-4 text-green-500" />
             </div>
           </div>
 
           <div>
-            <div className="text-sm text-gray-400 mb-2">REWARDS</div>
+            <div className="mb-2 text-sm text-gray-400">REWARDS</div>
             <div>
               Ø{blockData.rewards.amount} (USD${blockData.rewards.usd})
             </div>
@@ -127,22 +127,22 @@ export function BlockDetail({ blockNumber }: BlockDetailProps) {
       <TransactionsList transactions={[]} />
       {/* Rewards List */}
       <div className="mt-8">
-        <h2 className="text-lg font-bold mb-4">Rewards</h2>
+        <h2 className="mb-4 text-lg font-bold">Rewards</h2>
         <RewardsList
           rewards={[
             {
-              type: "Fee",
-              address: "dv4ACNkpYPcE3aKmYDqZm9G5EB3J4MRoeE7WNDRBVJB",
+              type: 'Fee',
+              address: 'dv4ACNkpYPcE3aKmYDqZm9G5EB3J4MRoeE7WNDRBVJB',
               amount: 0.00003,
             },
             {
-              type: "Rent",
-              address: "HP3bDMfsL15nGGbQHJPjRpSs69WyGwrVBWs23VBqEAoN",
+              type: 'Rent',
+              address: 'HP3bDMfsL15nGGbQHJPjRpSs69WyGwrVBWs23VBqEAoN',
               amount: -0.00000046,
             },
             {
-              type: "Rent",
-              address: "dv3qDFk1DTF36Z62bNvrCXe9sKATA6xvVy6A798xxAS",
+              type: 'Rent',
+              address: 'dv3qDFk1DTF36Z62bNvrCXe9sKATA6xvVy6A798xxAS',
               amount: 0.000000012,
             },
           ]}
@@ -151,4 +151,3 @@ export function BlockDetail({ blockNumber }: BlockDetailProps) {
     </div>
   )
 }
-

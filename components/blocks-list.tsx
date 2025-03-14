@@ -1,16 +1,16 @@
-"use client"
-import { BlockCard } from "@/components/block-card"
-import { BlocksTable } from "@/components/blocks-list/BlocksTable"
-import { Pagination } from "@/components/pagination"
-import { useBlocks } from "@/hooks/useBlocks"
-import { useState } from "react"
+'use client'
+import { BlockCard } from '@/components/block-card'
+import { BlocksTable } from '@/components/blocks-list/BlocksTable'
+import { Pagination } from '@/components/pagination'
+import { useBlocks } from '@/hooks/useBlocks'
+import { useState } from 'react'
 
 export default function BlocksList() {
   const [currentPage, setCurrentPage] = useState(1)
   const [currentBlockNumber, setCurrentBlockNumber] = useState(-1)
   const [pageSize, setPageSize] = useState(5)
   const { data, error, isLoading, isValidating, previousBlockNumber, nextBlockNumber, totalBlocks } = useBlocks({
-    from: currentBlockNumber <= 0 ? "" : String(currentBlockNumber),
+    from: currentBlockNumber <= 0 ? '' : String(currentBlockNumber),
     pageSize: pageSize,
   })
   const totalPages = Math.ceil(totalBlocks / pageSize)
@@ -40,7 +40,7 @@ export default function BlocksList() {
       setCurrentBlockNumber(previousBlockNumber ?? 0)
       setCurrentPage(page)
     } else {
-      alert("Invalid page")
+      alert('Invalid page')
     }
   }
 
@@ -48,7 +48,7 @@ export default function BlocksList() {
   if (error) return <div>Error: {error.message}</div>
   if (!blocks) return <div>No blocks</div>
   return (
-    <div className="bg-black text-white p-4 min-h-screen">
+    <div className="min-h-screen bg-black p-4 text-white">
       {/* Mobile & Tablet View */}
       <MobileView>
         <PageTitle title="Blocks" />
@@ -75,14 +75,17 @@ export default function BlocksList() {
       {/* Desktop View */}
       <DesktopView>
         <PageTitle title="Blocks" />
-        <BlocksTable className="mt-4" blocks={blocks.map(block => ({
-          blockNumber: block.blockNumber,
-          hash: block.data.hash,
-          transactions: block.data.numberOfTransactions,
-          rewards: block.data.numberOfRewards,
-          validator: block.data.producer,
-          time: block.data.blockTime * 1000,
-        }))} />
+        <BlocksTable
+          className="mt-4"
+          blocks={blocks.map((block) => ({
+            blockNumber: block.blockNumber,
+            hash: block.data.hash,
+            transactions: block.data.numberOfTransactions,
+            rewards: block.data.numberOfRewards,
+            validator: block.data.producer,
+            time: block.data.blockTime * 1000,
+          }))}
+        />
         <Pagination
           className="mt-4"
           currentPage={currentPage}
@@ -101,9 +104,9 @@ function PageTitle({ title }: { title: string }) {
 }
 
 function MobileView({ children }: { children: React.ReactNode }) {
-  return <div className="lg:hidden space-y-3">{children}</div>
+  return <div className="space-y-3 lg:hidden">{children}</div>
 }
 
 function DesktopView({ children }: { children: React.ReactNode }) {
-  return <div className="max-w-6xl mx-auto hidden lg:block">{children}</div>
+  return <div className="mx-auto hidden max-w-6xl lg:block">{children}</div>
 }

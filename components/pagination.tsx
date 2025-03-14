@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils"
-import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from "lucide-react"
+import { cn } from '@/lib/utils'
+import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from 'lucide-react'
 
 type StateProps = {
   currentPage: number
@@ -23,16 +23,16 @@ export function Pagination({
   pageSizeOptions = [5, 10, 20, 40],
   className,
   onPageChange,
-  onPageSizeChange
+  onPageSizeChange,
 }: Props) {
   return (
-    <div className={cn("flex items-center justify-between text-sm text-gray-400", className)}>
+    <div className={cn('flex items-center justify-between text-sm text-gray-400', className)}>
       <div className="flex items-center gap-2">
         <span>Rows Per Page:</span>
         <select
           value={pageSize}
           onChange={(e) => onPageSizeChange(Number(e.target.value))}
-          className="bg-gray-900/30 border border-gray-800 rounded px-2 py-1 text-white outline-none focus:border-indigo-500"
+          className="rounded border border-gray-800 bg-gray-900/30 px-2 py-1 text-white outline-none focus:border-indigo-500"
         >
           {pageSizeOptions.map((size) => (
             <option key={size} value={size}>
@@ -49,14 +49,14 @@ export function Pagination({
             disabled={currentPage === 1}
             className="p-1 hover:text-white disabled:opacity-50 disabled:hover:text-gray-400"
           >
-            <ChevronFirst className="w-5 h-5" />
+            <ChevronFirst className="h-5 w-5" />
           </button>
           <button
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
             className="p-1 hover:text-white disabled:opacity-50 disabled:hover:text-gray-400"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="h-5 w-5" />
           </button>
           <span className="min-w-[120px] text-center">
             {currentPage} of {totalPages.toLocaleString()}
@@ -66,14 +66,14 @@ export function Pagination({
             disabled={currentPage === totalPages}
             className="p-1 hover:text-white disabled:opacity-50 disabled:hover:text-gray-400"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="h-5 w-5" />
           </button>
           <button
             onClick={() => onPageChange(totalPages)}
             disabled={currentPage === totalPages}
             className="p-1 hover:text-white disabled:opacity-50 disabled:hover:text-gray-400"
           >
-            <ChevronLast className="w-5 h-5" />
+            <ChevronLast className="h-5 w-5" />
           </button>
         </div>
       </div>

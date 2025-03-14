@@ -1,4 +1,4 @@
-import { BlockDetail } from "@/components/block-detail"
+import { BlockDetail } from '@/components/block-detail'
 import { notFound } from 'next/navigation'
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
@@ -14,4 +14,3 @@ export default async function BlockPage(props: { searchParams: SearchParams }) {
 
   return <BlockDetail blockNumber={blockNumberString} />
 }
-
