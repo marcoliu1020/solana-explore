@@ -1,18 +1,27 @@
+import { getSpecificBlock } from '@/apis/getSpecificBlock'
 import { BlockDetail } from '@/components/block-detail'
 import { notFound } from 'next/navigation'
 
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
+type SearchParams = Promise<{
+  blockNumber?: string
+}>
 
 export default async function BlockPage(props: { searchParams: SearchParams }) {
   const searchParams = await props.searchParams
-  const blockNumber = searchParams.blockNumber
-  const blockNumberString = Array.isArray(blockNumber)
-    ? blockNumber[0]
-    : blockNumber
+  const blockNumber = Number(searchParams?.blockNumber)
 
-  if (!blockNumberString) {
+  if (!blockNumber || isNaN(blockNumber) || blockNumber < 1) {
     notFound()
   }
 
-  return <BlockDetail blockNumber={blockNumberString} />
+  const block = await getSpecificBlock(blockNumber)
+  console.log(block)
+
+  if (!block) notFound()
+  return (
+    <>
+      <h2 className="text-2xl font-bold">Overview</h2>
+      <BlockDetail block={block} />
+    </>
+  )
 }
