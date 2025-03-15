@@ -1,162 +1,166 @@
 'use client'
 
-import { RewardsList } from '@/components/rewards-list'
-import { TransactionsList } from '@/components/transactions-list'
-import { mockBlockDetail } from '@/data/block-detail'
-import { CheckCircle2, ChevronLeft, ChevronRight, Copy } from 'lucide-react'
-import Image from 'next/image'
+import type { Block } from '@/apis/types'
+import { formatDistanceToNow } from 'date-fns'
+import { ChevronLeft, ChevronRight, Clock } from 'lucide-react'
+import CopyClipboard from './copy-clipboard'
 import Link from 'next/link'
+import { cn, toSolanaAmount } from '@/lib/utils'
 
-interface BlockDetailProps {
-  blockNumber: string
+type Props = {
+  block: Block
 }
 
-export function BlockDetail({ blockNumber }: BlockDetailProps) {
-  const blockData = mockBlockDetail
-
-  const prevBlockNumber = Number.parseInt(blockNumber) - 1
-  const nextBlockNumber = Number.parseInt(blockNumber) + 1
-
+export function BlockDetail({ block }: Props) {
   return (
-    <div className="min-h-screen bg-black p-4 text-white lg:p-6">
-      {/* Header */}
-      <div className="mb-6">
-        <div className="mb-4 flex items-start justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <Image
-              src="/placeholder.svg?height=48&width=48"
-              alt="Block Icon"
-              width={48}
-              height={48}
-              className="hidden sm:block"
+    <div
+      className={cn(
+        'rounded-lg border border-gray-200 p-6',
+        '*:border-b *:border-gray-600 *:py-2',
+        '*:last:border-b-0 *:last:pb-0',
+        '*:first:pt-0',
+      )}
+    >
+      {/* {/* Block Number Row */}
+      <Row>
+        <RowTitle title="Block" />
+        <div className="flex items-center gap-4">
+          <RowValue value={block.blockNumber} />
+          <div className="flex gap-2">
+            <Link
+              data-testid="previous-block-link"
+              href={`/block?blockNumber=${block.blockNumber - 1}`}
+            >
+              <ChevronLeft className="size-7 cursor-pointer rounded-lg border border-gray-700 p-0.5 hover:bg-gray-600" />
+            </Link>
+            <Link
+              data-testid="next-block-link"
+              href={`/block?blockNumber=${block.blockNumber + 1}`}
+            >
+              <ChevronRight className="size-7 cursor-pointer rounded-lg border border-gray-700 p-0.5 hover:bg-gray-600" />
+            </Link>
+          </div>
+        </div>
+      </Row>
+
+      {/* Timestamp Row */}
+      <Row>
+        <RowTitle title="Timestamp" />
+        <div className="flex flex-wrap items-center gap-2">
+          <RowValue value={formatDistanceToNow(block.data.blockTime * 1000)} />
+          <div className="flex items-center gap-1">
+            <RowSubValue value={<Clock className="size-4" />} />
+            <RowSubValue
+              value={new Date(block.data.blockTime * 1000).toUTCString()}
             />
-            <div>
-              <h1 className="text-2xl font-bold sm:text-3xl">
-                {blockData.number}
-              </h1>
-              <div className="mt-1 flex items-center gap-2">
-                <span className="text-sm break-all text-gray-400">
-                  {blockData.hash}
-                </span>
-                <Copy className="h-4 w-4 shrink-0 cursor-pointer text-gray-500 hover:text-gray-300" />
-              </div>
-            </div>
-          </div>
-          <div className="flex shrink-0 items-center gap-2">
-            <Link
-              href={`/block?blockNumber=${prevBlockNumber}`}
-              className="rounded-lg p-2 transition-colors hover:bg-gray-800"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </Link>
-            <Link
-              href={`/block?blockNumber=${nextBlockNumber}`}
-              className="rounded-lg p-2 transition-colors hover:bg-gray-800"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </Link>
           </div>
         </div>
-      </div>
+      </Row>
 
-      {/* Content Grid */}
-      <div className="grid gap-4 lg:grid-cols-2">
-        {/* Left Column */}
-        <div className="space-y-4">
-          <div className="rounded-lg bg-gray-900/30 p-4">
-            <div className="mb-2 text-sm text-gray-400">LEADER</div>
-            <div className="flex items-center gap-2">
-              <span className="break-all text-indigo-400">
-                {blockData.leader}
-              </span>
-              <Copy className="h-4 w-4 shrink-0 cursor-pointer text-gray-500 hover:text-gray-300" />
-            </div>
-          </div>
-
-          <div className="rounded-lg bg-gray-900/30 p-4">
-            <div className="mb-2 text-sm text-gray-400">PARENT BLOCK</div>
-            <div className="flex items-center gap-2">
-              <span className="text-indigo-400">{blockData.parentBlock}</span>
-              <Copy className="h-4 w-4 shrink-0 cursor-pointer text-gray-500 hover:text-gray-300" />
-            </div>
-          </div>
-
-          <div className="rounded-lg bg-gray-900/30 p-4">
-            <div className="mb-2 text-sm text-gray-400">PARENT BLOCKHASH</div>
-            <div className="flex items-center gap-2">
-              <span className="break-all text-indigo-400">
-                {blockData.parentBlockHash}
-              </span>
-              <Copy className="h-4 w-4 shrink-0 cursor-pointer text-gray-500 hover:text-gray-300" />
-            </div>
-          </div>
+      {/* Block Hash Row */}
+      <Row>
+        <RowTitle title="Block Hash" />
+        <div className="flex items-center gap-2 overflow-hidden">
+          <RowValue
+            className="overflow-hidden text-ellipsis"
+            value={block.data.hash}
+          />
+          <CopyClipboard text={block.data.hash} />
         </div>
+      </Row>
 
-        {/* Right Column */}
-        <div className="space-y-4 rounded-lg bg-gray-900/30 p-4">
-          <div>
-            <div className="mb-2 text-sm text-gray-400">EPOCH</div>
-            <div className="flex items-center gap-2">
-              <span className="text-indigo-400">{blockData.epoch}</span>
-              <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
-            </div>
-          </div>
+      {/* Epoch Row */}
+      <Row>
+        <RowTitle title="Epoch" />
+        <RowValue value={block.data.epoch} />
+      </Row>
 
-          <div>
-            <div className="mb-2 text-sm text-gray-400">TRANSACTIONS</div>
-            <div>
-              {blockData.transactions.count} (
-              {blockData.transactions.successRate} Successful)
-            </div>
-          </div>
-
-          <div>
-            <div className="mb-2 text-sm text-gray-400">CREATED ON</div>
-            <div>{blockData.createdOn}</div>
-          </div>
-
-          <div>
-            <div className="mb-2 text-sm text-gray-400">CONFIRMATIONS</div>
-            <div className="flex items-center gap-2">
-              <span>{blockData.confirmations}</span>
-              <CheckCircle2 className="h-4 w-4 text-green-500" />
-            </div>
-          </div>
-
-          <div>
-            <div className="mb-2 text-sm text-gray-400">REWARDS</div>
-            <div>
-              Ø{blockData.rewards.amount} (USD${blockData.rewards.usd})
-            </div>
-          </div>
+      {/* Leader Row */}
+      <Row>
+        <RowTitle title="Leader" />
+        <div className="flex items-center gap-2 overflow-hidden">
+          <RowValue
+            className="overflow-hidden text-ellipsis"
+            value={block.data.producer}
+          />
+          <CopyClipboard text={block.data.producer} />
         </div>
-      </div>
+      </Row>
 
-      {/* Add TransactionsList below the grid */}
-      <TransactionsList transactions={[]} />
-      {/* Rewards List */}
-      <div className="mt-8">
-        <h2 className="mb-4 text-lg font-bold">Rewards</h2>
-        <RewardsList
-          rewards={[
-            {
-              type: 'Fee',
-              address: 'dv4ACNkpYPcE3aKmYDqZm9G5EB3J4MRoeE7WNDRBVJB',
-              amount: 0.00003,
-            },
-            {
-              type: 'Rent',
-              address: 'HP3bDMfsL15nGGbQHJPjRpSs69WyGwrVBWs23VBqEAoN',
-              amount: -0.00000046,
-            },
-            {
-              type: 'Rent',
-              address: 'dv3qDFk1DTF36Z62bNvrCXe9sKATA6xvVy6A798xxAS',
-              amount: 0.000000012,
-            },
-          ]}
-        />
-      </div>
+      {/* Reward Row */}
+      <Row>
+        <RowTitle title="Reward" />
+        <div className="flex items-center gap-2">
+          <RowValue value={toSolanaAmount(block.data.totalRewardAmount)} />
+          <RowSubValue value={'SOL'} />
+        </div>
+      </Row>
+
+      {/* Transactions Row */}
+      <Row>
+        <RowTitle title="Transactions" />
+        <div className="flex items-center gap-2">
+          <RowSubValue value={'Total'} />
+          <RowValue value={block.data.numberOfTransactions} />
+          <RowSubValue value={'transactions'} />
+        </div>
+      </Row>
+
+      {/* Previous Block Hash Row */}
+      <Row>
+        <RowTitle title="Previous Block Hash" />
+        <div className="flex items-center gap-2 overflow-hidden">
+          <RowValue
+            className="overflow-hidden text-ellipsis"
+            value={block.data.previousHash}
+          />
+          <CopyClipboard text={block.data.previousHash} />
+        </div>
+      </Row>
     </div>
   )
+}
+
+function Row({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  return (
+    <li
+      className={cn(
+        'flex flex-col gap-2 md:flex-row md:items-center md:justify-between',
+        className,
+      )}
+    >
+      {children}
+    </li>
+  )
+}
+
+function RowTitle({ title, className }: { title: string; className?: string }) {
+  return (
+    <h3 className={cn('font-medium text-indigo-400', className)}>{title}</h3>
+  )
+}
+function RowValue({
+  value,
+  className,
+}: {
+  value: React.ReactNode
+  className?: string
+}) {
+  return <span className={cn('text-gray-100', className)}>{value}</span>
+}
+
+function RowSubValue({
+  value,
+  className,
+}: {
+  value: React.ReactNode
+  className?: string
+}) {
+  return <span className={cn('text-gray-500', className)}>{value}</span>
 }
