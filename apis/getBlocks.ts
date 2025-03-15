@@ -41,7 +41,9 @@ export type QueryParams = {
 
 export async function getBlocks(queryParams: QueryParams): Promise<Blocks> {
   const searchParams = new URLSearchParams()
-  if (queryParams.from) searchParams.append('from', queryParams.from)
+
+  if (queryParams.from && Number(queryParams.from) > 0)
+    searchParams.append('from', queryParams.from)
   if (queryParams.pageSize)
     searchParams.append('pageSize', queryParams.pageSize.toString())
   if (queryParams.paginationType)
