@@ -8,3 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
+
+export function toSolanaAmount(amount: number) {
+  return amount / 1000000000
+}
