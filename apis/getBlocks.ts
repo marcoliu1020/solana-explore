@@ -40,18 +40,18 @@ export type QueryParams = {
 }
 
 export async function getBlocks(queryParams: QueryParams): Promise<Blocks> {
-  const searchParams = new URLSearchParams()
+  const params = new URLSearchParams()
 
   if (queryParams.from && Number(queryParams.from) > 0)
-    searchParams.append('from', queryParams.from)
+    params.append('from', queryParams.from)
   if (queryParams.pageSize)
-    searchParams.append('pageSize', queryParams.pageSize.toString())
+    params.append('pageSize', queryParams.pageSize.toString())
   if (queryParams.paginationType)
-    searchParams.append('paginationType', queryParams.paginationType)
+    params.append('paginationType', queryParams.paginationType)
   if (queryParams.reverse)
-    searchParams.append('reverse', queryParams.reverse.toString())
+    params.append('reverse', queryParams.reverse.toString())
 
-  const requestUrl = `${url}?${searchParams.toString()}`
+  const requestUrl = `${url}?${params.toString()}`
   const res = await fetch(requestUrl)
   const data = await res.json()
 
