@@ -2,14 +2,20 @@
 
 import { BlockCard } from '@/components/block-card'
 import { BlocksTable } from '@/components/blocks-list/BlocksTable'
-import { Pagination } from '@/components/pagination'
+import { Pagination, type OnPageAction } from '@/components/pagination'
 import { useBlocks } from '@/hooks/useBlocks'
 import { useLatestBlock } from '@/hooks/useLatestBlock'
 import { useState } from 'react'
 
 export default function BlocksList() {
   const [currentPage, setCurrentPage] = useState(1)
-  const [pivotBlockNumber, setPivotBlockNumber] = useState(-1)
+  const [pivotBlockNumber, setPivotBlockNumber] = useState(-1) // -1 means latest block
+
+  // total pages
+  const { latestBlock } = useLatestBlock()
+  const [pageSize, setPageSize] = useState(5)
+  const totalBlocks = latestBlock?.blockNumber ?? 0
+  const totalPages = Math.ceil(totalBlocks / pageSize)
 
   // blocks data
   const {
@@ -21,38 +27,39 @@ export default function BlocksList() {
     nextBlockNumber,
   } = useBlocks({
     from: pivotBlockNumber <= 0 ? '' : String(pivotBlockNumber),
-    pageSize: 100,
+    pageSize: pageSize,
   })
   console.log(blocks)
 
-  // total pages
-  const { latestBlock } = useLatestBlock()
-  const [pageSize, setPageSize] = useState(5)
-  const totalBlocks = latestBlock?.blockNumber ?? 0
-  const totalPages = Math.ceil(totalBlocks / pageSize)
-  
-  const handlePageChange = (page: number) => {
+  const handlePageChange = (action: OnPageAction) => {
     if (isValidating) return // prevent double clicks
 
-    const isFirstPage = page === 1
-    const isLastPage = page === totalPages
-    const isPreviousPage = page === currentPage - 1 && previousBlockNumber
-    const isNextPage = page === currentPage + 1 && nextBlockNumber
-
-    if (isFirstPage) {
-      setPivotBlockNumber(-1)
-      setCurrentPage(page)
-    } else if (isLastPage) {
-      setPivotBlockNumber(1) // first block number
-      setCurrentPage(page)
-    } else if (isNextPage) {
-      setPivotBlockNumber(nextBlockNumber ?? 0)
-      setCurrentPage(page)
-    } else if (isPreviousPage) {
-      setPivotBlockNumber(previousBlockNumber ?? 0)
-      setCurrentPage(page)
-    } else {
-      alert('Invalid page')
+    switch (action) {
+      case 'FIRST_PAGE':
+        setPivotBlockNumber(-1)
+        setCurrentPage(1)
+        break
+      case 'LAST_PAGE':
+        const lastPivotBlockNumber = pageSize
+        setPivotBlockNumber(lastPivotBlockNumber)
+        setCurrentPage(totalPages)
+        break
+      case 'NEXT_PAGE':
+        const nextPage = currentPage + 1
+        if (nextPage > totalPages) return
+        if (!nextBlockNumber) return alert('No more blocks')
+        setPivotBlockNumber(nextBlockNumber)
+        setCurrentPage(nextPage)
+        break
+      case 'PREV_PAGE':
+        const prevPage = currentPage - 1
+        if (prevPage < 1) return
+        if (!previousBlockNumber) return alert('No more blocks')
+        setPivotBlockNumber(previousBlockNumber)
+        setCurrentPage(prevPage)
+        break
+      default:
+        alert('Invalid Page Action')
     }
   }
 
