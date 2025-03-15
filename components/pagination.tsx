@@ -75,7 +75,7 @@ export function Pagination({
             <ChevronLeft className="h-5 w-5" />
           </button>
           <span className="min-w-[120px] text-center">
-            {currentPage} of {totalPages.toLocaleString()}
+            {currentPage.toLocaleString()} of {totalPages.toLocaleString()}
           </span>
           <button
             onClick={() => onPageChange('NEXT_PAGE')}
