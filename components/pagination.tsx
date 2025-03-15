@@ -6,7 +6,7 @@ import {
   ChevronRight,
 } from 'lucide-react'
 
-type StateProps = {
+export type StateProps = {
   currentPage: number
   totalPages: number
   pageSize: number
@@ -14,12 +14,18 @@ type StateProps = {
   className?: string
 }
 
-type ActionsProps = {
-  onPageChange: (page: number) => void
+export type ActionProps = {
+  onPageChange: (action: OnPageAction) => void
   onPageSizeChange: (size: number) => void
 }
 
-type Props = StateProps & ActionsProps
+export type OnPageAction =
+  | 'PREV_PAGE'
+  | 'NEXT_PAGE'
+  | 'FIRST_PAGE'
+  | 'LAST_PAGE'
+
+type Props = StateProps & ActionProps
 
 export function Pagination({
   currentPage,
@@ -55,14 +61,14 @@ export function Pagination({
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <button
-            onClick={() => onPageChange(1)}
+            onClick={() => onPageChange('FIRST_PAGE')}
             disabled={currentPage === 1}
             className="p-1 hover:text-white disabled:opacity-50 disabled:hover:text-gray-400"
           >
             <ChevronFirst className="h-5 w-5" />
           </button>
           <button
-            onClick={() => onPageChange(currentPage - 1)}
+            onClick={() => onPageChange('PREV_PAGE')}
             disabled={currentPage === 1}
             className="p-1 hover:text-white disabled:opacity-50 disabled:hover:text-gray-400"
           >
@@ -72,14 +78,14 @@ export function Pagination({
             {currentPage} of {totalPages.toLocaleString()}
           </span>
           <button
-            onClick={() => onPageChange(currentPage + 1)}
+            onClick={() => onPageChange('NEXT_PAGE')}
             disabled={currentPage === totalPages}
             className="p-1 hover:text-white disabled:opacity-50 disabled:hover:text-gray-400"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
           <button
-            onClick={() => onPageChange(totalPages)}
+            onClick={() => onPageChange('LAST_PAGE')}
             disabled={currentPage === totalPages}
             className="p-1 hover:text-white disabled:opacity-50 disabled:hover:text-gray-400"
           >
