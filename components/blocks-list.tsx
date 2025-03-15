@@ -4,52 +4,65 @@ import { BlockCard } from '@/components/block-card'
 import { BlocksTable } from '@/components/blocks-list/BlocksTable'
 import { Pagination, type OnPageAction } from '@/components/pagination'
 import { useBlocks } from '@/hooks/useBlocks'
-import { useLatestBlock } from '@/hooks/useLatestBlock'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 export default function BlocksList() {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [pivotBlockNumber, setPivotBlockNumber] = useState(-1) // -1 means latest block
-
-  // total pages
-  const { latestBlock } = useLatestBlock()
   const [pageSize, setPageSize] = useState(5)
-  const totalBlocks = latestBlock?.blockNumber ?? 0
-  const totalPages = Math.ceil(totalBlocks / pageSize)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [isSearchFromHead, setIsSearchFromHead] = useState(false) // search from first block (No.1)
+  const [pivotBlockNumber, setPivotBlockNumber] = useState(-1)
 
   // blocks data
   const {
     error,
     isLoading,
     isValidating,
-    blocks,
-    previousBlockNumber,
-    nextBlockNumber,
+    blocks: blocksData,
+    previousBlockNumber: previousBlockNumberData,
+    nextBlockNumber: nextBlockNumberData,
   } = useBlocks({
     from: pivotBlockNumber <= 0 ? '' : String(pivotBlockNumber),
     pageSize: pageSize,
+    reverse: isSearchFromHead,
   })
-  console.log(blocks)
+  let blocks = blocksData
+  let previousBlockNumber = previousBlockNumberData
+  let nextBlockNumber = nextBlockNumberData
 
+  // if searching from the beginning, reverse the blocks order
+  if (isSearchFromHead) {
+    previousBlockNumber = nextBlockNumberData
+    nextBlockNumber = previousBlockNumberData
+    blocks = blocksData?.toReversed()
+  }
+  console.log('blocks', blocks)
+
+  // init total pages
+  const latestBlockRef = useRef(-1)
+  const shouldInitLatestBlock =
+    latestBlockRef.current === -1 &&
+    pivotBlockNumber === -1 &&
+    blocks &&
+    blocks[0].blockNumber
+  if (shouldInitLatestBlock) {
+    latestBlockRef.current = blocks![0].blockNumber
+  }
+  const totalPages = Math.ceil(latestBlockRef.current / pageSize)
+
+  // handle page change
   const handlePageChange = (action: OnPageAction) => {
     if (isValidating) return // prevent double clicks
 
     switch (action) {
       case 'FIRST_PAGE':
         setPivotBlockNumber(-1)
+        setIsSearchFromHead(false)
         setCurrentPage(1)
         break
       case 'LAST_PAGE':
-        const lastPivotBlockNumber = pageSize
-        setPivotBlockNumber(lastPivotBlockNumber)
+        setPivotBlockNumber(1)
+        setIsSearchFromHead(true)
         setCurrentPage(totalPages)
-        break
-      case 'NEXT_PAGE':
-        const nextPage = currentPage + 1
-        if (nextPage > totalPages) return
-        if (!nextBlockNumber) return alert('No more blocks')
-        setPivotBlockNumber(nextBlockNumber)
-        setCurrentPage(nextPage)
         break
       case 'PREV_PAGE':
         const prevPage = currentPage - 1
@@ -57,6 +70,13 @@ export default function BlocksList() {
         if (!previousBlockNumber) return alert('No more blocks')
         setPivotBlockNumber(previousBlockNumber)
         setCurrentPage(prevPage)
+        break
+      case 'NEXT_PAGE':
+        const nextPage = currentPage + 1
+        if (nextPage > totalPages) return
+        if (!nextBlockNumber) return alert('No more blocks')
+        setPivotBlockNumber(nextBlockNumber)
+        setCurrentPage(nextPage)
         break
       default:
         alert('Invalid Page Action')
