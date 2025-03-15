@@ -1,26 +1,5 @@
+import type { Block, Response } from './types'
 import { SOLANA_FM_URL } from './urls'
-
-export type Block = {
-  blockNumber: number
-  data: {
-    blockTime: number
-    dataSize: number
-    epoch: number
-    hash: string
-    number: number
-    numberOfRewards: number
-    numberOfTransactions: number
-    parentNumber: number
-    previousHash: string
-    producer: string
-    successfulTransactions: number
-    totalComputeUnitsConsumed: number
-    totalComputeUnitsLimit: number
-    totalRewardAmount: number
-    totalTxFees: number
-    voteTransactions: number
-  }
-}
 
 export type Blocks = {
   data: Block[]
@@ -29,6 +8,8 @@ export type Blocks = {
     previous: number
   }
 }
+
+export type BlocksResponse = Response<Blocks>
 
 export const url = new URL('blocks', SOLANA_FM_URL)
 
@@ -53,7 +34,7 @@ export async function getBlocks(queryParams: QueryParams): Promise<Blocks> {
 
   const requestUrl = `${url}?${params.toString()}`
   const res = await fetch(requestUrl)
-  const data = await res.json()
+  const data: BlocksResponse = await res.json()
 
   return data.result
 }
