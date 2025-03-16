@@ -45,9 +45,12 @@ export function BlocksTable({ blocks, className }: Props) {
             >
               <td className="p-4">
                 <div className="flex items-center gap-2">
-                  <span className="cursor-pointer text-indigo-400 hover:text-indigo-300">
+                  <Link
+                    href={`/block?blockNumber=${block.blockNumber}`}
+                    className="cursor-pointer text-indigo-400 hover:text-indigo-300"
+                  >
                     {block.blockNumber}
-                  </span>
+                  </Link>
                   <CopyClipboard text={block.blockNumber.toString()} />
                 </div>
               </td>
