@@ -88,7 +88,7 @@ export default function BlocksList({ className }: { className?: string }) {
   if (error) return <div>Error: {error.message}</div>
   if (!blocks) return <div>No blocks</div>
   return (
-    <div className={cn('min-h-screen bg-black text-white', className)}>
+    <div className={cn('text-white', className)}>
       {/* Mobile & Tablet View */}
       <MobileView>
         {blocks.map((block) => (
@@ -142,5 +142,5 @@ function MobileView({ children }: { children: React.ReactNode }) {
 }
 
 function DesktopView({ children }: { children: React.ReactNode }) {
-  return <div className="mx-auto hidden max-w-6xl lg:block">{children}</div>
+  return <div className="hidden lg:block">{children}</div>
 }
