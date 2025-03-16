@@ -1,17 +1,30 @@
 'use client'
 
-import type { Block } from '@/apis/types'
+import { cn } from '@/lib/utils'
 import { formatDistanceToNow } from 'date-fns'
 import { ChevronLeft, ChevronRight, Clock } from 'lucide-react'
-import CopyClipboard from './copy-clipboard'
 import Link from 'next/link'
-import { cn, toSolanaAmount } from '@/lib/utils'
+import CopyClipboard from './copy-clipboard'
 
 type Props = {
-  block: Block
+  blockNumber: number
+  timestamp: number
+  blockHash: string
+  leader: string
+  rewardInSol: number
+  transactions: number
+  previousBlock: string
 }
 
-export function BlockDetail({ block }: Props) {
+export function BlockDetail({
+  blockNumber,
+  timestamp,
+  blockHash,
+  leader,
+  rewardInSol,
+  transactions,
+  previousBlock,
+}: Props) {
   return (
     <div
       className={cn(
@@ -25,17 +38,17 @@ export function BlockDetail({ block }: Props) {
       <Row>
         <RowTitle title="Block" />
         <div className="flex items-center gap-4">
-          <RowValue value={block.blockNumber} />
+          <RowValue value={blockNumber} />
           <div className="flex gap-2">
             <Link
               data-testid="previous-block-link"
-              href={`/block?blockNumber=${block.blockNumber - 1}`}
+              href={`/block?blockNumber=${blockNumber - 1}`}
             >
               <ChevronLeft className="size-7 cursor-pointer rounded-lg border border-gray-700 p-0.5 hover:bg-gray-600" />
             </Link>
             <Link
               data-testid="next-block-link"
-              href={`/block?blockNumber=${block.blockNumber + 1}`}
+              href={`/block?blockNumber=${blockNumber + 1}`}
             >
               <ChevronRight className="size-7 cursor-pointer rounded-lg border border-gray-700 p-0.5 hover:bg-gray-600" />
             </Link>
@@ -47,12 +60,10 @@ export function BlockDetail({ block }: Props) {
       <Row>
         <RowTitle title="Timestamp" />
         <div className="flex flex-wrap items-center gap-2">
-          <RowValue value={formatDistanceToNow(block.data.blockTime * 1000)} />
+          <RowValue value={formatDistanceToNow(timestamp * 1000)} />
           <div className="flex items-center gap-1">
             <RowSubValue value={<Clock className="size-4" />} />
-            <RowSubValue
-              value={new Date(block.data.blockTime * 1000).toUTCString()}
-            />
+            <RowSubValue value={new Date(timestamp * 1000).toUTCString()} />
           </div>
         </div>
       </Row>
@@ -63,27 +74,18 @@ export function BlockDetail({ block }: Props) {
         <div className="flex items-center gap-2 overflow-hidden">
           <RowValue
             className="overflow-hidden text-ellipsis"
-            value={block.data.hash}
+            value={blockHash}
           />
-          <CopyClipboard text={block.data.hash} />
+          <CopyClipboard text={blockHash} />
         </div>
-      </Row>
-
-      {/* Epoch Row */}
-      <Row>
-        <RowTitle title="Epoch" />
-        <RowValue value={block.data.epoch} />
       </Row>
 
       {/* Leader Row */}
       <Row>
         <RowTitle title="Leader" />
         <div className="flex items-center gap-2 overflow-hidden">
-          <RowValue
-            className="overflow-hidden text-ellipsis"
-            value={block.data.producer}
-          />
-          <CopyClipboard text={block.data.producer} />
+          <RowValue className="overflow-hidden text-ellipsis" value={leader} />
+          <CopyClipboard text={leader} />
         </div>
       </Row>
 
@@ -91,7 +93,7 @@ export function BlockDetail({ block }: Props) {
       <Row>
         <RowTitle title="Reward" />
         <div className="flex items-center gap-2">
-          <RowValue value={toSolanaAmount(block.data.totalRewardAmount)} />
+          <RowValue value={rewardInSol} />
           <RowSubValue value={'SOL'} />
         </div>
       </Row>
@@ -101,7 +103,7 @@ export function BlockDetail({ block }: Props) {
         <RowTitle title="Transactions" />
         <div className="flex items-center gap-2">
           <RowSubValue value={'Total'} />
-          <RowValue value={block.data.numberOfTransactions} />
+          <RowValue value={transactions} />
           <RowSubValue value={'transactions'} />
         </div>
       </Row>
@@ -112,9 +114,9 @@ export function BlockDetail({ block }: Props) {
         <div className="flex items-center gap-2 overflow-hidden">
           <RowValue
             className="overflow-hidden text-ellipsis"
-            value={block.data.previousHash}
+            value={previousBlock}
           />
-          <CopyClipboard text={block.data.previousHash} />
+          <CopyClipboard text={previousBlock} />
         </div>
       </Row>
     </div>
