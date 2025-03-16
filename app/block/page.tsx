@@ -1,6 +1,7 @@
-import { getSpecificBlock } from '@/apis/getSpecificBlock'
+import { getBlock } from '@/apis/solana-rpc/getBlock'
 import { BlockDetail } from '@/components/block-detail'
 import PageTitle from '@/components/page-title'
+import { toSolanaAmount } from '@/lib/utils'
 import { notFound } from 'next/navigation'
 
 type SearchParams = Promise<{
@@ -15,7 +16,7 @@ export default async function BlockPage(props: { searchParams: SearchParams }) {
     notFound()
   }
 
-  const block = await getSpecificBlock(blockNumber)
+  const block = await getBlock(blockNumber)
   console.log(block)
 
   if (!block) notFound()
@@ -23,7 +24,15 @@ export default async function BlockPage(props: { searchParams: SearchParams }) {
     <>
       <main className="p-4">
         <PageTitle title="Overview" />
-        <BlockDetail block={block} />
+        <BlockDetail
+          blockNumber={blockNumber}
+          timestamp={block?.blockTime ?? 0}
+          blockHash={block?.blockhash ?? ''}
+          leader={block?.rewards?.[0]?.pubkey ?? ''}
+          rewardInSol={toSolanaAmount(block?.rewards?.[0]?.lamports ?? 0)}
+          transactions={block?.transactions?.length ?? 0}
+          previousBlock={block?.previousBlockhash ?? ''}
+        />
       </main>
     </>
   )
