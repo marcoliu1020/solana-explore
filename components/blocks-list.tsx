@@ -4,9 +4,10 @@ import { BlockCard } from '@/components/block-card'
 import { BlocksTable } from '@/components/blocks-list/BlocksTable'
 import { Pagination, type OnPageAction } from '@/components/pagination'
 import { useBlocks } from '@/hooks/useBlocks'
+import { cn } from '@/lib/utils'
 import { useRef, useState } from 'react'
 
-export default function BlocksList() {
+export default function BlocksList({ className }: { className?: string }) {
   const [pageSize, setPageSize] = useState(5)
   const [currentPage, setCurrentPage] = useState(1)
   const [isSearchFromHead, setIsSearchFromHead] = useState(false) // search from first block (No.1)
@@ -35,7 +36,7 @@ export default function BlocksList() {
     nextBlockNumber = previousBlockNumberData
     blocks = blocksData?.toReversed()
   }
-  console.log('blocks', blocks)
+  // console.log('blocks', blocks)
 
   // init total pages
   const latestBlockRef = useRef(-1)
@@ -87,10 +88,9 @@ export default function BlocksList() {
   if (error) return <div>Error: {error.message}</div>
   if (!blocks) return <div>No blocks</div>
   return (
-    <div className="min-h-screen bg-black p-4 text-white">
+    <div className={cn('min-h-screen bg-black text-white', className)}>
       {/* Mobile & Tablet View */}
       <MobileView>
-        <PageTitle title="Blocks" />
         {blocks.map((block) => (
           <BlockCard
             key={block.blockNumber}
@@ -113,7 +113,6 @@ export default function BlocksList() {
 
       {/* Desktop View */}
       <DesktopView>
-        <PageTitle title="Blocks" />
         <BlocksTable
           className="mt-4"
           blocks={blocks.map((block) => ({
@@ -136,10 +135,6 @@ export default function BlocksList() {
       </DesktopView>
     </div>
   )
-}
-
-function PageTitle({ title }: { title: string }) {
-  return <h2 className="text-2xl font-bold">{title}</h2>
 }
 
 function MobileView({ children }: { children: React.ReactNode }) {
