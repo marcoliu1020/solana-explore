@@ -1,3 +1,4 @@
+import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -9,6 +10,7 @@ export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-export function toSolanaAmount(amount: number) {
-  return amount / 1000000000
+export const toSolanaAmount = (amount: number) => {
+  if (!amount) return 0
+  return amount / LAMPORTS_PER_SOL
 }
