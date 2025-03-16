@@ -1,5 +1,6 @@
 import { getSpecificBlock } from '@/apis/getSpecificBlock'
 import { BlockDetail } from '@/components/block-detail'
+import PageTitle from '@/components/page-title'
 import { notFound } from 'next/navigation'
 
 type SearchParams = Promise<{
@@ -20,8 +21,10 @@ export default async function BlockPage(props: { searchParams: SearchParams }) {
   if (!block) notFound()
   return (
     <>
-      <h2 className="text-2xl font-bold">Overview</h2>
-      <BlockDetail block={block} />
+      <main className="p-4">
+        <PageTitle title="Overview" />
+        <BlockDetail block={block} />
+      </main>
     </>
   )
 }
