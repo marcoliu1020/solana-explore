@@ -1,6 +1,6 @@
+import CopyClipboard from '@/components/copy-clipboard'
 import { cn } from '@/lib/utils'
 import { formatDistanceToNow } from 'date-fns'
-import { Copy } from 'lucide-react'
 import Link from 'next/link'
 
 export type BlockItem = {
@@ -48,7 +48,7 @@ export function BlocksTable({ blocks, className }: Props) {
                   <span className="cursor-pointer text-indigo-400 hover:text-indigo-300">
                     {block.blockNumber}
                   </span>
-                  <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
+                  <CopyClipboard text={block.blockNumber.toString()} />
                 </div>
               </td>
               <td className="p-4">
@@ -56,19 +56,19 @@ export function BlocksTable({ blocks, className }: Props) {
                   <span className="max-w-[8rem] overflow-hidden text-ellipsis text-indigo-400">
                     {block.hash}
                   </span>
-                  <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
+                  <CopyClipboard text={block.hash} />
                 </div>
               </td>
               <td className="p-4">
                 <div className="flex items-center gap-2">
                   <span>{block.transactions}</span>
-                  <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
+                  <CopyClipboard text={block.transactions.toString()} />
                 </div>
               </td>
               <td className="p-4">
                 <div className="flex items-center gap-2">
                   <span>{block.rewards}</span>
-                  <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
+                  <CopyClipboard text={block.rewards.toString()} />
                 </div>
               </td>
               <td className="p-4">
@@ -79,7 +79,7 @@ export function BlocksTable({ blocks, className }: Props) {
                   <span className="max-w-[8rem] overflow-hidden text-ellipsis text-indigo-400">
                     {block.validator}
                   </span>
-                  <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
+                  <CopyClipboard text={block.validator} />
                 </div>
               </td>
               <td className="p-4 text-gray-400">

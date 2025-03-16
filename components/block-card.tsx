@@ -1,6 +1,6 @@
+import CopyClipboard from '@/components/copy-clipboard'
 import { cn } from '@/lib/utils'
 import { formatDistanceToNow } from 'date-fns'
-import { Copy } from 'lucide-react'
 import Link from 'next/link'
 
 type BlockItem = {
@@ -44,7 +44,7 @@ export function BlockCard({
             <span className="max-w-[8rem] overflow-hidden text-ellipsis text-indigo-400">
               {hash}
             </span>
-            <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
+            <CopyClipboard text={hash} />
           </div>
         </div>
 
@@ -64,7 +64,7 @@ export function BlockCard({
             <span className="max-w-[8rem] overflow-hidden text-ellipsis text-indigo-400">
               {validator}
             </span>
-            <Copy className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-300" />
+            <CopyClipboard text={validator} />
           </div>
         </div>
       </div>
