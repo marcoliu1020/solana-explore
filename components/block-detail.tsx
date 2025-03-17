@@ -143,9 +143,7 @@ function Row({
 }
 
 function RowTitle({ title, className }: { title: string; className?: string }) {
-  return (
-    <h3 className={cn('font-medium text-indigo-400', className)}>{title}</h3>
-  )
+  return <h3 className={cn('font-medium', className)}>{title}</h3>
 }
 function RowValue({
   value,
