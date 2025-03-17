@@ -103,6 +103,7 @@ export default function BlocksList({ className }: { className?: string }) {
           />
         ))}
         <Pagination
+          className="mt-2"
           currentPage={currentPage}
           totalPages={totalPages}
           pageSize={pageSize}
@@ -114,7 +115,6 @@ export default function BlocksList({ className }: { className?: string }) {
       {/* Desktop View */}
       <DesktopView>
         <BlocksTable
-          className="mt-4"
           blocks={blocks.map((block) => ({
             blockNumber: block.blockNumber,
             hash: block.data.hash,
@@ -125,7 +125,7 @@ export default function BlocksList({ className }: { className?: string }) {
           }))}
         />
         <Pagination
-          className="mt-4"
+          className="mt-2"
           currentPage={currentPage}
           totalPages={totalPages}
           pageSize={pageSize}
