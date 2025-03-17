@@ -14,6 +14,7 @@ type Props = {
   rewardInSol: number
   transactions: number
   previousBlock: string
+  className?: string
 }
 
 export function BlockDetail({
@@ -24,6 +25,7 @@ export function BlockDetail({
   rewardInSol,
   transactions,
   previousBlock,
+  className,
 }: Props) {
   return (
     <div
@@ -32,6 +34,7 @@ export function BlockDetail({
         '*:border-b *:border-gray-600 *:py-2',
         '*:last:border-b-0 *:last:pb-0',
         '*:first:pt-0',
+        className,
       )}
     >
       {/* {/* Block Number Row */}
