@@ -1,8 +1,11 @@
+'use client'
+
 import CopyClipboard from '@/components/copy-clipboard'
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
-import React from 'react'
 import { Fuel } from 'lucide-react'
+import Link from 'next/link'
+import Pagination, { type OnPageAction } from './pagination'
+import { useState } from 'react'
 
 type Transaction = {
   signature: string
@@ -16,6 +19,39 @@ type Props = {
 }
 
 export default function TransactionsTable({ transactions, className }: Props) {
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+
+  // calculate total pages
+  const totalPages = Math.ceil(transactions.length / pageSize)
+
+  // filter transactions
+  const filteredTransactions = transactions.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
+  )
+
+  const handlePageChange = (action: OnPageAction) => {
+    switch (action) {
+      case 'PREV_PAGE':
+        setCurrentPage(currentPage - 1)
+        break
+      case 'NEXT_PAGE':
+        setCurrentPage(currentPage + 1)
+        break
+      case 'FIRST_PAGE':
+        setCurrentPage(1)
+        break
+      case 'LAST_PAGE':
+        setCurrentPage(totalPages)
+        break
+    }
+  }
+
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size)
+  }
+
   return (
     <div
       className={cn(
@@ -30,7 +66,7 @@ export default function TransactionsTable({ transactions, className }: Props) {
         <div className="font-bold text-gray-400">FEE</div>
       </div>
 
-      {transactions.map((tx) => (
+      {filteredTransactions.map((tx) => (
         <div
           key={tx.signature}
           className={cn(
@@ -63,6 +99,15 @@ export default function TransactionsTable({ transactions, className }: Props) {
           </div>
         </div>
       ))}
+
+      <Pagination
+        className="col-span-3"
+        currentPage={currentPage}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        onPageChange={handlePageChange}
+        onPageSizeChange={handlePageSizeChange}
+      />
     </div>
   )
 }
