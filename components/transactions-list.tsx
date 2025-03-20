@@ -17,8 +17,14 @@ type Props = {
 
 export function TransactionsTable({ transactions, className }: Props) {
   return (
-    <div className={cn('rounded-lg border border-gray-200 p-6', className)}>
-      <div className="grid grid-flow-col gap-8 px-2 md:grid-cols-3">
+    <div
+      className={cn(
+        'grid grid-cols-3 gap-x-4 gap-y-2',
+        'rounded-lg border border-gray-200 p-6',
+        className,
+      )}
+    >
+      <div className="col-span-3 grid grid-flow-col md:grid-cols-subgrid">
         <div className="font-bold text-gray-400">SIGNATURE</div>
         <div className="font-bold text-gray-400">SIGNER</div>
         <div className="font-bold text-gray-400">FEE</div>
@@ -28,13 +34,13 @@ export function TransactionsTable({ transactions, className }: Props) {
         <div
           key={tx.signature}
           className={cn(
-            'grid grid-cols-1 gap-3 p-2 md:grid-cols-3 md:gap-8',
-            'mt-2 text-base',
-            'rounded-2xl border border-gray-800',
+            'col-span-3 grid grid-cols-1 gap-y-2 md:grid-cols-subgrid',
+            'p-2 text-base',
+            'rounded-2xl border border-gray-700',
             'hover:bg-gray-800/50',
           )}
         >
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 border-0 border-red-800">
             <Link
               href={`/transaction?signature=${tx.signature}`}
               className="max-w-[20rem] overflow-hidden text-ellipsis text-indigo-400 hover:text-indigo-300"
@@ -51,7 +57,7 @@ export function TransactionsTable({ transactions, className }: Props) {
             <CopyClipboard text={tx.signer} />
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 border-0 border-blue-800">
             <Fuel className="size-5" />
             <span>{tx.fee}</span>
           </div>
