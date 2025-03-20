@@ -17,7 +17,7 @@ type Props = {
   className?: string
 }
 
-export function BlockDetail({
+export default function BlockDetail({
   blockNumber,
   timestamp,
   blockHash,

@@ -15,7 +15,7 @@ type Props = {
   className?: string
 }
 
-export function TransactionsTable({ transactions, className }: Props) {
+export default function TransactionsTable({ transactions, className }: Props) {
   return (
     <div
       className={cn(
