@@ -2,7 +2,7 @@
 
 import { BlockCard } from '@/components/block-card'
 import { BlocksTable } from '@/components/blocks-list/BlocksTable'
-import { Pagination, type OnPageAction } from '@/components/pagination'
+import Pagination, { type OnPageAction } from '@/components/pagination'
 import { useBlocks } from '@/hooks/useBlocks'
 import { cn } from '@/lib/utils'
 import { useRef, useState } from 'react'

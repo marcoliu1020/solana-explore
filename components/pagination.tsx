@@ -27,7 +27,7 @@ export type OnPageAction =
 
 type Props = StateProps & ActionProps
 
-export function Pagination({
+export default function Pagination({
   currentPage,
   totalPages,
   pageSize,
