@@ -23,12 +23,12 @@ export default async function BlockPage(props: { searchParams: SearchParams }) {
   if (!block) notFound()
   console.log(block)
 
-  // transform transactions
+  // transactions dto
   const transactions =
-    block.transactions.slice(0, 10).map((tx) => ({
+    block.transactions.map((tx) => ({
       signature: tx.transaction.signatures[0],
       signer: tx.transaction.message.staticAccountKeys[0].toString(),
-      fee: tx.meta?.fee ?? 0,
+      fee: toSolanaAmount(tx.meta?.fee ?? 0),
     })) ?? []
 
   return (
