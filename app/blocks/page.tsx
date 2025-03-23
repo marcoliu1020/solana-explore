@@ -1,5 +1,5 @@
-import BlocksList from '@/components/blocks-list'
 import PageTitle from '@/components/page-title'
+import BlocksList from './blocks-list'
 
 export default async function BlocksPage() {
   return (
