@@ -1,7 +1,7 @@
 'use client'
 
 import { BlockCard } from '@/components/block-card'
-import { BlocksTable } from '@/components/blocks-list/BlocksTable'
+import { BlocksTable } from '@/app/blocks/blocks-list/BlocksTable'
 import Pagination, { type OnPageAction } from '@/components/pagination'
 import { useBlocks } from '@/hooks/useBlocks'
 import { cn } from '@/lib/utils'
