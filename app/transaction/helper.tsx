@@ -1,5 +1,6 @@
 import CopyClipboard from '@/components/copy-clipboard'
 import LinkWithColor from '@/components/link-with-color'
+import { ErrorBadge, SuccessBadge } from '@/components/status-badge'
 import { toSolanaAmount } from '@/lib/utils'
 import type { VersionedTransactionResponse } from '@solana/web3.js'
 
@@ -34,7 +35,7 @@ export const txDetailDTO = (transaction: VersionedTransactionResponse) => {
     },
     {
       title: 'Result',
-      value: transaction.meta?.err?.toString(),
+      value: transaction.meta?.err ? <ErrorBadge /> : <SuccessBadge />,
     },
     {
       title: 'Signer',
