@@ -1,10 +1,10 @@
 'use client'
 
 import CopyClipboard from '@/components/copy-clipboard'
+import Pagination, { type OnPageAction } from '@/components/pagination'
 import { cn } from '@/lib/utils'
 import { Fuel } from 'lucide-react'
 import Link from 'next/link'
-import Pagination, { type OnPageAction } from '../../components/pagination'
 import { useState } from 'react'
 
 type Transaction = {
@@ -18,7 +18,7 @@ type Props = {
   className?: string
 }
 
-export default function TransactionsTable({ transactions, className }: Props) {
+export default function TransactionsList({ transactions, className }: Props) {
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
 

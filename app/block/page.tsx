@@ -1,7 +1,7 @@
 import { getBlock } from '@/apis/solana-rpc/getBlock'
 import BlockDetail from '@/app/block/block-detail'
 import PageTitle from '@/components/page-title'
-import TransactionsTable from '@/app/block/transactions-list'
+import TransactionsList from './transactions-list'
 import { toSolanaAmount } from '@/lib/utils'
 import { notFound } from 'next/navigation'
 
@@ -50,7 +50,7 @@ export default async function BlockPage(props: { searchParams: SearchParams }) {
 
         <>
           <PageTitle className="mt-4" title="Transactions" />
-          <TransactionsTable className="mt-2" transactions={transactions} />
+          <TransactionsList className="mt-2" transactions={transactions} />
         </>
       </main>
     </>
