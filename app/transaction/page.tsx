@@ -4,6 +4,7 @@ import PageTitle from '@/components/page-title'
 import TitleValueCard from '@/components/title-value-card'
 import { notFound } from 'next/navigation'
 import { txDetailDTO } from './helper'
+import InstructionsList from './components/instructions-list'
 
 type SearchParams = Promise<{
   signature?: string
@@ -22,8 +23,26 @@ export default async function TransactionPage(props: {
   if (!transaction) {
     return notFound()
   }
+  console.log(transaction)
+
   // tx detail DTO
   const txDetail = txDetailDTO(transaction)
+
+  // instructions detail DTO
+  const instructions = transaction.transaction.message.compiledInstructions.map(
+    (instruction) => ({
+      ...instruction,
+      data: new Uint8Array(instruction.data), // Convert Uint8Array to regular array
+    }),
+  )
+  console.log(instructions)
+
+  // program ids DTO
+  const accountIDs = transaction.transaction.message.staticAccountKeys.map(
+    (key) => key.toString(),
+  )
+  console.log(accountIDs)
+
   // logs
   const logMessages = transaction.meta?.logMessages
 
@@ -33,6 +52,16 @@ export default async function TransactionPage(props: {
       <div>
         <PageTitle title="Transaction Details" />
         <TitleValueCard className="mt-2" titleValues={txDetail} />
+      </div>
+
+      {/* instructions */}
+      <div className="mt-4">
+        <PageTitle title="Instructions" />
+        <InstructionsList
+          className="mt-2"
+          accountIDs={accountIDs}
+          instructions={instructions}
+        />
       </div>
 
       {/* logs */}
