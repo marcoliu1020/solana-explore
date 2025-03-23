@@ -37,7 +37,9 @@ export default function Search({ className }: { className?: string }) {
         setIsLoading(false)
       }
     } else {
-      setError('Invalid Solana signature or block hash. Please check and try again.')
+      setError(
+        'Invalid Solana signature or block hash. Please check and try again.',
+      )
     }
   }
 
@@ -64,29 +66,25 @@ export default function Search({ className }: { className?: string }) {
             onKeyPress={handleKeyPress}
             disabled={isLoading}
             className={cn(
-              "w-full rounded-lg border px-4 py-2 text-sm text-gray-200 focus:outline-none",
-              error 
-                ? "border-red-500 bg-gray-800 focus:border-red-500 focus:ring-1 focus:ring-red-500" 
-                : "border-gray-700 bg-gray-800 focus:border-purple-500 focus:ring-1 focus:ring-purple-500",
-              isLoading && "opacity-50 cursor-not-allowed"
+              'w-full rounded-lg border px-4 py-2 text-sm text-gray-200 focus:outline-none',
+              error
+                ? 'border-red-500 bg-gray-800 focus:border-red-500 focus:ring-1 focus:ring-red-500'
+                : 'border-gray-700 bg-gray-800 focus:border-purple-500 focus:ring-1 focus:ring-purple-500',
+              isLoading && 'cursor-not-allowed opacity-50',
             )}
           />
-          <button 
+          <button
             onClick={handleSearch}
             disabled={isLoading}
             className={cn(
-              "absolute top-1/2 right-2 -translate-y-1/2 p-2 text-purple-500 hover:text-purple-400",
-              isLoading && "opacity-50 cursor-not-allowed"
+              'absolute top-1/2 right-2 -translate-y-1/2 p-2 text-purple-500 hover:text-purple-400',
+              isLoading && 'cursor-not-allowed opacity-50',
             )}
           >
             <SearchIcon size={16} />
           </button>
         </div>
-        {error && (
-          <p className="mt-2 text-sm text-red-500">
-            {error}
-          </p>
-        )}
+        {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
       </div>
     </div>
   )
