@@ -23,3 +23,25 @@ export const toBase58 = (data: Buffer) => {
 export const toHex = (data: Buffer) => {
   return data.toString('hex')
 }
+
+export const isValidSolanaSignature = (signature: string): boolean => {
+  try {
+    // Check if the signature is a valid base58 string
+    const decoded = bs58.decode(signature)
+    // Solana signatures are 64 bytes long
+    return decoded.length === 64
+  } catch {
+    return false
+  }
+}
+
+export const isValidSolanaBlockHash = (hash: string): boolean => {
+  try {
+    // Check if the hash is a valid base58 string
+    const decoded = bs58.decode(hash)
+    // Solana block hashes are 32 bytes long
+    return decoded.length === 32
+  } catch {
+    return false
+  }
+}
