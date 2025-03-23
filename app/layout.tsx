@@ -1,6 +1,8 @@
 import Search from '@/components/search'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import Image from 'next/image'
+import Link from 'next/link'
 import './globals.css'
 
 const geistSans = Geist({
@@ -28,7 +30,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Search className="mt-10" />
+        <div className="mx-auto flex max-w-screen-lg items-center justify-center gap-4 p-4">
+          <Link href="/" className="transition-opacity">
+            <Image
+              src="/solana_icon.png"
+              alt="Solana Logo"
+              width={40}
+              height={40}
+              priority
+            />
+          </Link>
+          <Search className="" />
+        </div>
         {children}
       </body>
     </html>
