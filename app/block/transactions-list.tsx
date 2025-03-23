@@ -4,7 +4,7 @@ import CopyClipboard from '@/components/copy-clipboard'
 import { cn } from '@/lib/utils'
 import { Fuel } from 'lucide-react'
 import Link from 'next/link'
-import Pagination, { type OnPageAction } from './pagination'
+import Pagination, { type OnPageAction } from '../../components/pagination'
 import { useState } from 'react'
 
 type Transaction = {

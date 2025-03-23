@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { formatDistanceToNow } from 'date-fns'
 import { ChevronLeft, ChevronRight, Clock } from 'lucide-react'
 import Link from 'next/link'
-import CopyClipboard from './copy-clipboard'
+import CopyClipboard from '../../components/copy-clipboard'
 
 type Props = {
   blockNumber: number

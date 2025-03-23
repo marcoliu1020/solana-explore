@@ -1,7 +1,7 @@
 import { getBlock } from '@/apis/solana-rpc/getBlock'
-import BlockDetail from '@/components/block-detail'
+import BlockDetail from '@/app/block/block-detail'
 import PageTitle from '@/components/page-title'
-import TransactionsTable from '@/components/transactions-list'
+import TransactionsTable from '@/app/block/transactions-list'
 import { toSolanaAmount } from '@/lib/utils'
 import { notFound } from 'next/navigation'
 
