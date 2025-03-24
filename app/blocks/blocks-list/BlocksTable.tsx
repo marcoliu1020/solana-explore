@@ -90,7 +90,7 @@ export function BlocksTable({ blocks, className }: Props) {
               </td>
               <td className="p-4">
                 <Link href={`/block?blockNumber=${block.blockNumber}`}>
-                  <button className="rounded-md bg-indigo-600 px-4 py-1.5 text-white hover:bg-indigo-700">
+                  <button className="cursor-pointer rounded-md bg-indigo-600 px-4 py-1.5 text-white hover:bg-indigo-700">
                     View
                   </button>
                 </Link>

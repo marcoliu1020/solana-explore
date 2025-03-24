@@ -71,7 +71,7 @@ export function BlockCard({
 
       <div className="flex items-center justify-between pt-1">
         <Link href={`/block?blockNumber=${blockNumber}`}>
-          <button className="rounded-md bg-indigo-600 px-4 py-1.5 text-white hover:bg-indigo-700">
+          <button className="cursor-pointer rounded-md bg-indigo-600 px-4 py-1.5 text-white hover:bg-indigo-700">
             View
           </button>
         </Link>
