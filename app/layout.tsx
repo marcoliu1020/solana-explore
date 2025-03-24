@@ -30,7 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="mx-auto flex max-w-screen-lg items-center justify-center gap-4 p-4">
+        <header className="mx-auto flex max-w-screen-lg items-center justify-center gap-4 p-4">
           <Link href="/" className="transition-opacity">
             <Image
               src="/solana_icon.png"
@@ -41,7 +41,7 @@ export default function RootLayout({
             />
           </Link>
           <Search className="" />
-        </div>
+        </header>
         {children}
       </body>
     </html>
